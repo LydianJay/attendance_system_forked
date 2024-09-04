@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rfid_attendance_system/styles/styles.dart';
+import 'package:mysql_client/mysql_client.dart';
 
 class DataBaseView extends StatefulWidget {
   const DataBaseView({super.key});
@@ -9,6 +10,44 @@ class DataBaseView extends StatefulWidget {
 }
 
 class _DataBaseViewState extends State<DataBaseView> {
+  MySQLConnection? _mySQL;
+
+  void initSQL() async {
+    _mySQL = await MySQLConnection.createConnection(
+      host: "192.168.135.161", // local
+      port: 3306,
+      userName: "root",
+      password: "",
+      databaseName: "rfid_attendance_system", // optional
+    );
+    await _mySQL!.connect();
+  }
+
+  void fetchData() async {
+    if (_mySQL == null) {
+      debugPrint("Not connected!");
+    } else {
+      final res = await _mySQL!.execute("SELECT * FROM students");
+      debugPrint("length: ${res.rows.length}");
+      for (final row in res.rows) {
+        debugPrint(row.typedColByName('rfid').toString());
+      }
+    }
+  }
+
+  Widget _buildTable() {
+    List<TableRow> tableRows = [];
+
+    return Container();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initSQL();
+    fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
