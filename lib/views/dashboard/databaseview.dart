@@ -23,30 +23,26 @@ class _DataBaseViewState extends State<DataBaseView> {
     tableRows.add(
       TableRow(
         children: [
-          Text(
-            'RFID',
-            textAlign: TextAlign.center,
-            style: Styles.p4,
-          ),
+          Text('RFID', textAlign: TextAlign.center, style: Styles.p1),
           Text(
             'First Name',
             textAlign: TextAlign.center,
-            style: Styles.p4,
+            style: Styles.p1,
           ),
           Text(
             'Middle Name',
             textAlign: TextAlign.center,
-            style: Styles.p4,
+            style: Styles.p1,
           ),
           Text(
             'Last Name',
             textAlign: TextAlign.center,
-            style: Styles.p4,
+            style: Styles.p1,
           ),
           Text(
             'Gender',
             textAlign: TextAlign.center,
-            style: Styles.p4,
+            style: Styles.p1,
           ),
         ],
       ),
@@ -57,27 +53,27 @@ class _DataBaseViewState extends State<DataBaseView> {
         Text(
           row['rfid'],
           textAlign: TextAlign.center,
-          style: Styles.p5.copyWith(fontFamily: 'Calibre'),
+          style: Styles.p2.copyWith(fontFamily: 'Calibre'),
         ),
         Text(
           row['fname'],
           textAlign: TextAlign.center,
-          style: Styles.p5.copyWith(fontFamily: 'Calibre'),
+          style: Styles.p2.copyWith(fontFamily: 'Calibre'),
         ),
         Text(
           row['mname'],
           textAlign: TextAlign.center,
-          style: Styles.p5.copyWith(fontFamily: 'Calibre'),
+          style: Styles.p2.copyWith(fontFamily: 'Calibre'),
         ),
         Text(
           row['lname'],
           textAlign: TextAlign.center,
-          style: Styles.p5.copyWith(fontFamily: 'Calibre'),
+          style: Styles.p2.copyWith(fontFamily: 'Calibre'),
         ),
         Text(
           row['gender'].toString() == '1' ? "Male" : "Female",
           textAlign: TextAlign.center,
-          style: Styles.p5.copyWith(fontFamily: 'Calibre'),
+          style: Styles.p2.copyWith(fontFamily: 'Calibre'),
         ),
       ]));
     }
@@ -91,7 +87,7 @@ class _DataBaseViewState extends State<DataBaseView> {
         4: FlexColumnWidth(),
       },
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-      border: TableBorder.all(color: Styles.c4),
+      border: TableBorder.all(),
       children: tableRows,
     );
   }
