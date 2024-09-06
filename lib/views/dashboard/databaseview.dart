@@ -226,7 +226,14 @@ class _DataBaseViewState extends State<DataBaseView> {
                       if (snapshot.hasData) {
                         return snapshot.data!;
                       }
-                      return const Center(child: CircularProgressIndicator());
+                      return Container(
+                        margin: const EdgeInsets.only(top: 100),
+                        child: Text(
+                          'Data not available',
+                          textAlign: TextAlign.center,
+                          style: Styles.h4,
+                        ),
+                      );
                     })
               ],
             ),

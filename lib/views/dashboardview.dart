@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rfid_attendance_system/styles/styles.dart';
 import 'package:rfid_attendance_system/fonts/custom_icons.dart';
+import 'package:rfid_attendance_system/views/dashboard/adduserview.dart';
 import 'package:rfid_attendance_system/views/dashboard/databaseview.dart';
 
 class DashBoardView extends StatefulWidget {
@@ -17,6 +18,8 @@ class _DashBoardViewState extends State<DashBoardView> {
     switch (_currentPanel) {
       case 0:
         return const DataBaseView();
+      case 3:
+        return const AddUserView();
     }
 
     return Container();
