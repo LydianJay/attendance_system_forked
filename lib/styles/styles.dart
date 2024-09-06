@@ -45,4 +45,40 @@ class Styles {
     decoration: TextDecoration.none,
     color: c4,
   );
+
+  static TextStyle p5 = TextStyle(
+    fontFamily: 'Arial',
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+    decoration: TextDecoration.none,
+    color: c4,
+  );
+  static TextStyle p4 = TextStyle(
+    fontFamily: 'Arial',
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+    decoration: TextDecoration.none,
+    color: c4,
+  );
+  static TextStyle p3 = TextStyle(
+    fontFamily: 'Arial',
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    decoration: TextDecoration.none,
+    color: c4,
+  );
+  static TextStyle p2 = TextStyle(
+    fontFamily: 'Arial',
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    decoration: TextDecoration.none,
+    color: c4,
+  );
+  static TextStyle p1 = TextStyle(
+    fontFamily: 'Arial',
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    decoration: TextDecoration.none,
+    color: c4,
+  );
 }
