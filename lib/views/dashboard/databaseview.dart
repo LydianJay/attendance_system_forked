@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:rfid_attendance_system/styles/styles.dart';
 import 'package:rfid_attendance_system/controller/student.dart';
 
@@ -18,77 +19,208 @@ class _DataBaseViewState extends State<DataBaseView> {
         child: const Text('data not available'),
       );
     }
+    final headerStyle = Styles.p3.copyWith(color: Styles.c4.withAlpha(190));
+    final tStyle = Styles.p4.copyWith(fontFamily: 'Calibre');
 
-    List<TableRow> tableRows = [];
-    tableRows.add(
-      TableRow(
-        children: [
-          Text('RFID', textAlign: TextAlign.center, style: Styles.p1),
-          Text(
-            'First Name',
-            textAlign: TextAlign.center,
-            style: Styles.p1,
-          ),
-          Text(
-            'Middle Name',
-            textAlign: TextAlign.center,
-            style: Styles.p1,
-          ),
-          Text(
-            'Last Name',
-            textAlign: TextAlign.center,
-            style: Styles.p1,
-          ),
-          Text(
-            'Gender',
-            textAlign: TextAlign.center,
-            style: Styles.p1,
-          ),
-        ],
-      ),
-    );
-
+    List<Widget> tableRows = [];
+    bool darken = false;
     for (final row in jsonData) {
-      tableRows.add(TableRow(children: [
-        Text(
-          row['rfid'],
-          textAlign: TextAlign.center,
-          style: Styles.p2.copyWith(fontFamily: 'Calibre'),
+      tableRows.add(
+        Container(
+          decoration: BoxDecoration(
+            color: darken ? Styles.c4.withAlpha(15) : null,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Flexible(
+                flex: 5,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        row['rfid'],
+                        textAlign: TextAlign.center,
+                        style: tStyle,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Flexible(
+                flex: 5,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        row['fname'],
+                        textAlign: TextAlign.center,
+                        style: tStyle,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Flexible(
+                flex: 5,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        row['mname'],
+                        textAlign: TextAlign.center,
+                        style: tStyle,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Flexible(
+                flex: 5,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        row['lname'],
+                        textAlign: TextAlign.center,
+                        style: tStyle,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Flexible(
+                flex: 5,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        row['gender'].toString() == '1' ? "Male" : "Female",
+                        textAlign: TextAlign.center,
+                        style: tStyle,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-        Text(
-          row['fname'],
-          textAlign: TextAlign.center,
-          style: Styles.p2.copyWith(fontFamily: 'Calibre'),
-        ),
-        Text(
-          row['mname'],
-          textAlign: TextAlign.center,
-          style: Styles.p2.copyWith(fontFamily: 'Calibre'),
-        ),
-        Text(
-          row['lname'],
-          textAlign: TextAlign.center,
-          style: Styles.p2.copyWith(fontFamily: 'Calibre'),
-        ),
-        Text(
-          row['gender'].toString() == '1' ? "Male" : "Female",
-          textAlign: TextAlign.center,
-          style: Styles.p2.copyWith(fontFamily: 'Calibre'),
-        ),
-      ]));
+      );
+      darken = !darken;
     }
 
-    return Table(
-      columnWidths: const <int, TableColumnWidth>{
-        0: FlexColumnWidth(),
-        1: FlexColumnWidth(),
-        2: FlexColumnWidth(),
-        3: FlexColumnWidth(),
-        4: FlexColumnWidth(),
-      },
-      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-      border: TableBorder.all(),
-      children: tableRows,
+    // return Table(
+    //   columnWidths: const <int, TableColumnWidth>{
+    //     0: FlexColumnWidth(),
+    //     1: FlexColumnWidth(),
+    //     2: FlexColumnWidth(),
+    //     3: FlexColumnWidth(),
+    //     4: FlexColumnWidth(),
+    //   },
+    //   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+    //   border: TableBorder.all(),
+    //   children: tableRows,
+    // );
+
+    return Column(
+      children: [
+        Flexible(
+          flex: 5,
+          child: Container(
+            // margin: const EdgeInsets.symmetric(vertical: 2),
+            decoration: BoxDecoration(
+              color: Styles.c4.withAlpha(50),
+              // borderRadius: BorderRadius.circular(4),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Flexible(
+                  flex: 5,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'RFID',
+                          textAlign: TextAlign.center,
+                          style: headerStyle,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  flex: 5,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Last Name',
+                          textAlign: TextAlign.center,
+                          style: headerStyle,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  flex: 5,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'First Name',
+                          textAlign: TextAlign.center,
+                          style: headerStyle,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  flex: 5,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Midle Name',
+                          textAlign: TextAlign.center,
+                          style: headerStyle,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  flex: 5,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Gender',
+                          textAlign: TextAlign.center,
+                          style: headerStyle,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Flexible(
+          flex: 40,
+          child: ListView(
+            children: [
+              Column(
+                children: tableRows,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -214,24 +346,21 @@ class _DataBaseViewState extends State<DataBaseView> {
               color: Styles.c2,
               borderRadius: BorderRadius.circular(3),
             ),
-            child: ListView(
-              children: [
-                FutureBuilder(
-                    future: _buildTable(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return snapshot.data!;
-                      }
-                      return Container(
-                        margin: const EdgeInsets.only(top: 100),
-                        child: Text(
-                          'Data not available',
-                          textAlign: TextAlign.center,
-                          style: Styles.h4,
-                        ),
-                      );
-                    })
-              ],
+            child: FutureBuilder(
+              future: _buildTable(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return snapshot.data!;
+                }
+                return Container(
+                  margin: const EdgeInsets.only(top: 100),
+                  child: Text(
+                    'Data not available',
+                    textAlign: TextAlign.center,
+                    style: Styles.h4,
+                  ),
+                );
+              },
             ),
           ),
         ),
