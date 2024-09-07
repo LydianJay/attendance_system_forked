@@ -27,8 +27,6 @@ class _DashBoardViewState extends State<DashBoardView> {
 
   @override
   Widget build(BuildContext context) {
-    double scrWidth = MediaQuery.of(context).size.width;
-    double scrHeight = MediaQuery.of(context).size.height;
     return Material(
       child: Container(
         decoration: BoxDecoration(color: Styles.c1),

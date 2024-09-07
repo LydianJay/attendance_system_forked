@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:rfid_attendance_system/styles/styles.dart';
 import 'package:rfid_attendance_system/controller/student.dart';
 
@@ -38,10 +37,27 @@ class _DataBaseViewState extends State<DataBaseView> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        row['rfid'],
-                        textAlign: TextAlign.center,
-                        style: tStyle,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            left: BorderSide(
+                              color: Styles.c4.withAlpha(100),
+                              width: 1.2,
+                            ),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Styles.c3,
+                              blurRadius: 0.4,
+                              blurStyle: BlurStyle.outer,
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          row['rfid'],
+                          textAlign: TextAlign.center,
+                          style: tStyle,
+                        ),
                       ),
                     ),
                   ],
@@ -94,10 +110,27 @@ class _DataBaseViewState extends State<DataBaseView> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        row['gender'].toString() == '1' ? "Male" : "Female",
-                        textAlign: TextAlign.center,
-                        style: tStyle,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            right: BorderSide(
+                              color: Styles.c4.withAlpha(100),
+                              width: 1.2,
+                            ),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Styles.c3,
+                              blurRadius: 0.4,
+                              blurStyle: BlurStyle.outer,
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          row['gender'].toString() == '1' ? "Male" : "Female",
+                          textAlign: TextAlign.center,
+                          style: tStyle,
+                        ),
                       ),
                     ),
                   ],
@@ -110,27 +143,25 @@ class _DataBaseViewState extends State<DataBaseView> {
       darken = !darken;
     }
 
-    // return Table(
-    //   columnWidths: const <int, TableColumnWidth>{
-    //     0: FlexColumnWidth(),
-    //     1: FlexColumnWidth(),
-    //     2: FlexColumnWidth(),
-    //     3: FlexColumnWidth(),
-    //     4: FlexColumnWidth(),
-    //   },
-    //   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-    //   border: TableBorder.all(),
-    //   children: tableRows,
-    // );
-
     return Column(
       children: [
         Flexible(
           flex: 5,
           child: Container(
-            // margin: const EdgeInsets.symmetric(vertical: 2),
+            margin: const EdgeInsets.only(top: 3),
             decoration: BoxDecoration(
               color: Styles.c4.withAlpha(50),
+              border: Border.all(
+                color: Styles.c4.withAlpha(100),
+                width: 0.4,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Styles.c3,
+                  blurRadius: 1,
+                  blurStyle: BlurStyle.outer,
+                ),
+              ],
               // borderRadius: BorderRadius.circular(4),
             ),
             child: Row(
