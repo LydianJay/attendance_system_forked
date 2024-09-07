@@ -44,6 +44,10 @@ class _DataBaseViewState extends State<DataBaseView> {
                               color: Styles.c4.withAlpha(100),
                               width: 1.2,
                             ),
+                            bottom: BorderSide(
+                              color: Styles.c4.withAlpha(100),
+                              width: 1.2,
+                            ),
                           ),
                           boxShadow: [
                             BoxShadow(
@@ -68,10 +72,27 @@ class _DataBaseViewState extends State<DataBaseView> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        row['fname'],
-                        textAlign: TextAlign.center,
-                        style: tStyle,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Styles.c4.withAlpha(100),
+                              width: 1.2,
+                            ),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Styles.c3,
+                              blurRadius: 0.4,
+                              blurStyle: BlurStyle.outer,
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          row['fname'],
+                          textAlign: TextAlign.center,
+                          style: tStyle,
+                        ),
                       ),
                     ),
                   ],
@@ -82,10 +103,27 @@ class _DataBaseViewState extends State<DataBaseView> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        row['mname'],
-                        textAlign: TextAlign.center,
-                        style: tStyle,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Styles.c4.withAlpha(100),
+                              width: 1.2,
+                            ),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Styles.c3,
+                              blurRadius: 0.4,
+                              blurStyle: BlurStyle.outer,
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          row['mname'],
+                          textAlign: TextAlign.center,
+                          style: tStyle,
+                        ),
                       ),
                     ),
                   ],
@@ -96,10 +134,27 @@ class _DataBaseViewState extends State<DataBaseView> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        row['lname'],
-                        textAlign: TextAlign.center,
-                        style: tStyle,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Styles.c4.withAlpha(100),
+                              width: 1.2,
+                            ),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Styles.c3,
+                              blurRadius: 0.4,
+                              blurStyle: BlurStyle.outer,
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          row['lname'],
+                          textAlign: TextAlign.center,
+                          style: tStyle,
+                        ),
                       ),
                     ),
                   ],
@@ -114,6 +169,10 @@ class _DataBaseViewState extends State<DataBaseView> {
                         decoration: BoxDecoration(
                           border: Border(
                             right: BorderSide(
+                              color: Styles.c4.withAlpha(100),
+                              width: 1.2,
+                            ),
+                            bottom: BorderSide(
                               color: Styles.c4.withAlpha(100),
                               width: 1.2,
                             ),
