@@ -81,4 +81,24 @@ class Styles {
     decoration: TextDecoration.none,
     color: c4,
   );
+
+  static TextStyle tfts = Styles.p5.copyWith(
+    color: Styles.c4.withAlpha(200),
+    fontWeight: FontWeight.normal,
+  );
+  static InputDecoration id = InputDecoration(
+    hintStyle: Styles.p5,
+    labelStyle: p3.copyWith(
+      color: p3.color!.withAlpha(150),
+      fontWeight: FontWeight.normal,
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Styles.c3),
+    ),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(
+        color: Styles.c4.withAlpha(125),
+      ),
+    ),
+  );
 }

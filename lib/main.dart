@@ -8,6 +8,7 @@ void main() async {
   WindowOptions windowOptions = const WindowOptions(
       size: Size(1000, 600),
       maximumSize: Size(1000, 600),
+      minimumSize: Size(1000, 600),
       center: false,
       skipTaskbar: false,
       titleBarStyle: TitleBarStyle.normal,

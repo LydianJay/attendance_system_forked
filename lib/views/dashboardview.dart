@@ -12,7 +12,7 @@ class DashBoardView extends StatefulWidget {
 }
 
 class _DashBoardViewState extends State<DashBoardView> {
-  int _currentPanel = 0;
+  int _currentPanel = 3;
 
   Widget _buildRigthWidget() {
     switch (_currentPanel) {
@@ -38,9 +38,13 @@ class _DashBoardViewState extends State<DashBoardView> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: Styles.c2,
+                      border: Border(
+                          right: BorderSide(
+                        color: Styles.c4.withAlpha(125),
+                      )),
                       borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(12),
-                        bottomRight: Radius.circular(12),
+                        topRight: Radius.circular(6),
+                        bottomRight: Radius.circular(6),
                       ),
                     ),
                     child: ListView(
@@ -63,7 +67,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                                     color: Styles.c4.withAlpha(125))),
                           ),
                           child: Text(
-                            'NEMSU',
+                            'Administrator',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontFamily: 'helvetica',
@@ -87,8 +91,10 @@ class _DashBoardViewState extends State<DashBoardView> {
                         ListTile(
                           title: const Text('Database'),
                           leading: const Icon(CustomIcons.database),
-                          selected: true,
+                          selected: _currentPanel == 0,
                           selectedColor: Styles.c4,
+                          iconColor: Styles.c3,
+                          textColor: Styles.c3,
                           onTap: () {
                             setState(() {
                               _currentPanel = 0;
@@ -98,6 +104,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                         ListTile(
                           title: const Text('Graph'),
                           leading: const Icon(CustomIcons.graph),
+                          selected: _currentPanel == 1,
                           selectedColor: Styles.c4,
                           iconColor: Styles.c3,
                           textColor: Styles.c3,
@@ -110,6 +117,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                         ListTile(
                           title: const Text('Search'),
                           leading: const Icon(CustomIcons.search),
+                          selected: _currentPanel == 2,
                           selectedColor: Styles.c4,
                           iconColor: Styles.c3,
                           textColor: Styles.c3,
@@ -140,6 +148,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                         ListTile(
                           title: const Text('Add User'),
                           leading: const Icon(CustomIcons.user_plus),
+                          selected: _currentPanel == 3,
                           selectedColor: Styles.c4,
                           iconColor: Styles.c3,
                           textColor: Styles.c3,
@@ -152,6 +161,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                         ListTile(
                           title: const Text('Remove User'),
                           leading: const Icon(CustomIcons.user_minus),
+                          selected: _currentPanel == 4,
                           selectedColor: Styles.c4,
                           iconColor: Styles.c3,
                           textColor: Styles.c3,
@@ -164,6 +174,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                         ListTile(
                           title: const Text('Edit User'),
                           leading: const Icon(CustomIcons.user_edit),
+                          selected: _currentPanel == 5,
                           selectedColor: Styles.c4,
                           iconColor: Styles.c3,
                           textColor: Styles.c3,
