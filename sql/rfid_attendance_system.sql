@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 04, 2024 at 09:21 AM
+-- Generation Time: Sep 08, 2024 at 01:04 PM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.18
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `attendance` (
 DROP TABLE IF EXISTS `course`;
 CREATE TABLE IF NOT EXISTS `course` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL,
+  `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `abbr` varchar(16) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -57,8 +57,8 @@ CREATE TABLE IF NOT EXISTS `course` (
 
 INSERT INTO `course` (`id`, `name`, `abbr`) VALUES
 (1, 'Bachelor of Science In Computer ', 'BSCS'),
-(2, 'Bachelor of Science In Informati', 'BSIT'),
-(3, 'Bachelor of Science In Informati', 'BSIT');
+(2, 'Bachelor of Science In Information Technology', 'BSIT'),
+(3, 'Bachelor of Science in Information Security', 'BSIS');
 
 -- --------------------------------------------------------
 
@@ -68,7 +68,7 @@ INSERT INTO `course` (`id`, `name`, `abbr`) VALUES
 
 DROP TABLE IF EXISTS `students`;
 CREATE TABLE IF NOT EXISTS `students` (
-  `rfid` int NOT NULL,
+  `rfid` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `fname` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `mname` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `lname` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
@@ -76,16 +76,20 @@ CREATE TABLE IF NOT EXISTS `students` (
   `bmonth` int NOT NULL,
   `byear` int NOT NULL,
   `gender` int NOT NULL,
-  `courseID` int NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `courseID` int NOT NULL,
+  PRIMARY KEY (`rfid`)
+) ENGINE=MyISAM AUTO_INCREMENT=4292717312 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `students`
 --
 
 INSERT INTO `students` (`rfid`, `fname`, `mname`, `lname`, `bday`, `bmonth`, `byear`, `gender`, `courseID`) VALUES
-(132268, 'Juan', 'Dela', 'Cruz', 1, 1, 2001, 1, 1),
-(132268, 'Juan', 'Dela', 'Cruz', 1, 1, 2001, 1, 1);
+(255, 'Juan', 'Monexus', 'Dela Cruz', 1, 1, 1969, 1, 1),
+(2899456032, 'Lloyd Jay', 'Arpilleda', 'Edradan', 20, 2, 2002, 1, 1),
+(3016504078, 'Honey Lynn', 'Arpilleda', 'Edradan', 4, 7, 2003, 0, 1),
+(4292717311, 'Vladimir', 'Dofensmirt', 'Putin', 17, 7, 1986, 0, 3),
+(2863311615, 'Lydian', 'Cubillan', 'Arpilleda', 20, 2, 2002, 1, 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
