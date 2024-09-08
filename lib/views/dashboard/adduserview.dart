@@ -44,18 +44,19 @@ class _AddUserViewState extends State<AddUserView> {
     ),
   ];
   String selected = "Male";
+  int courseIDselected = 0;
 
   @override
   void dispose() {
     super.dispose();
-    _ctrlfname.dispose();
-    _ctrlSearch.dispose();
-    _ctrlcourse.dispose();
-    _ctrlbdate.dispose();
-    _ctrlrfid.dispose();
-    _ctrlfname.dispose();
-    _ctrllname.dispose();
-    _ctrlmname.dispose();
+    // _ctrlfname.dispose();
+    // _ctrlSearch.dispose();
+    // _ctrlcourse.dispose();
+    // _ctrlbdate.dispose();
+    // _ctrlrfid.dispose();
+    // _ctrlfname.dispose();
+    // _ctrllname.dispose();
+    // _ctrlmname.dispose();
   }
 
   @override
@@ -250,6 +251,8 @@ class _AddUserViewState extends State<AddUserView> {
                                                                 _ctrlcourse
                                                                         .text =
                                                                     course.name;
+                                                                courseIDselected =
+                                                                    course.id;
                                                                 Navigator.pop(
                                                                     context);
                                                               },
@@ -338,7 +341,7 @@ class _AddUserViewState extends State<AddUserView> {
                     bmonth: int.parse(date.first),
                     byear: int.parse(date.last),
                     gender: selected == "Male" ? 1 : 0,
-                    courseid: 1,
+                    courseid: courseIDselected,
                   );
                   StudentCtrl.insertUser(model);
                   showDialog(

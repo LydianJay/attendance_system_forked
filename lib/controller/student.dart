@@ -22,7 +22,6 @@ class StudentCtrl {
     final uri = Uri.http(DbConfig.ip,
         "flutter-rfid-attendance-system-backend/set/insert_student.php");
 
-    // final response = await http.post(uri, body: student.toJSON());
     final header = {"Content-Type": "application/json"};
     var req = http.Request('POST', uri);
 
@@ -30,10 +29,22 @@ class StudentCtrl {
     req.headers.addAll(header);
     final response = await req.send();
     if (response.statusCode == 200) {
-      // final jsonData = jsonDecode(response.body);
       debugPrint(await response.stream.bytesToString());
     } else {
       debugPrint("ERROR - Status Code: ${response.statusCode}");
     }
+  }
+
+  static Future<List<int>> getStudentCount() async {
+    final uri = Uri.http(DbConfig.ip,
+        "flutter-rfid-attendance-system-backend/fetch/count_student.php");
+    final response = await http.get(uri);
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(response.body);
+      return [int.parse(jsonData.first['num']), int.parse(jsonData[1]['num'])];
+    } else {
+      debugPrint("ERROR - Status Code: ${response.statusCode}");
+    }
+    return [];
   }
 }

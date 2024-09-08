@@ -91,6 +91,37 @@ class _DataBaseViewState extends State<DataBaseView> {
                           ],
                         ),
                         child: Text(
+                          row['lname'],
+                          textAlign: TextAlign.center,
+                          style: tStyle,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Flexible(
+                flex: 5,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Styles.c4.withAlpha(100),
+                              width: 1.2,
+                            ),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Styles.c3,
+                              blurRadius: 0.4,
+                              blurStyle: BlurStyle.outer,
+                            ),
+                          ],
+                        ),
+                        child: Text(
                           row['fname'],
                           textAlign: TextAlign.center,
                           style: tStyle,
@@ -123,37 +154,6 @@ class _DataBaseViewState extends State<DataBaseView> {
                         ),
                         child: Text(
                           row['mname'],
-                          textAlign: TextAlign.center,
-                          style: tStyle,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Flexible(
-                flex: 5,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Styles.c4.withAlpha(100),
-                              width: 1.2,
-                            ),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Styles.c3,
-                              blurRadius: 0.4,
-                              blurStyle: BlurStyle.outer,
-                            ),
-                          ],
-                        ),
-                        child: Text(
-                          row['lname'],
                           textAlign: TextAlign.center,
                           style: tStyle,
                         ),
@@ -315,9 +315,23 @@ class _DataBaseViewState extends State<DataBaseView> {
     );
   }
 
+  int _numMale = 0;
+  int _numFemale = 0;
+
+  void _fetchCountAsync() async {
+    final count = await StudentCtrl.getStudentCount();
+    if (count.isNotEmpty) {
+      setState(() {
+        _numMale = count.first;
+        _numFemale = count.last;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    _fetchCountAsync();
   }
 
   @override
@@ -360,7 +374,7 @@ class _DataBaseViewState extends State<DataBaseView> {
                                   flex: 5,
                                   child: Container(
                                       child: Text(
-                                    '765',
+                                    '${_numFemale + _numMale}',
                                     style: Styles.h1,
                                   )),
                                 ),
@@ -403,7 +417,7 @@ class _DataBaseViewState extends State<DataBaseView> {
                                   child: Container(
                                     margin: const EdgeInsets.only(top: 15),
                                     child: Text(
-                                      'Male: 430',
+                                      'Male: $_numMale',
                                       style: Styles.h4,
                                     ),
                                   ),
@@ -412,7 +426,7 @@ class _DataBaseViewState extends State<DataBaseView> {
                                   flex: 6,
                                   child: Container(
                                       child: Text(
-                                    'Female: 335',
+                                    'Female: $_numFemale',
                                     style: Styles.h4,
                                   )),
                                 ),
