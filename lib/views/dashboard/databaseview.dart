@@ -58,7 +58,9 @@ class _DataBaseViewState extends State<DataBaseView> {
                           ],
                         ),
                         child: Text(
-                          row['rfid'],
+                          int.parse(row['rfid'].toString())
+                              .toRadixString(16)
+                              .toUpperCase(),
                           textAlign: TextAlign.center,
                           style: tStyle,
                         ),

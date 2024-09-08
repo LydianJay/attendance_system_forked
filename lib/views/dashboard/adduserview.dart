@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:rfid_attendance_system/controller/course.dart';
 import 'package:rfid_attendance_system/controller/student.dart';
 import 'package:rfid_attendance_system/fonts/custom_icons.dart';
+import 'package:rfid_attendance_system/model/coursemodel.dart';
 import 'package:rfid_attendance_system/model/studentmodel.dart';
 import 'package:rfid_attendance_system/styles/styles.dart';
 import 'package:rfid_attendance_system/fonts/icon_set_icons.dart';
@@ -24,7 +26,8 @@ class _AddUserViewState extends State<AddUserView> {
       TextEditingController(text: '1/1/1969');
   final TextEditingController _ctrlrfid =
       TextEditingController(text: '000000FF');
-
+  final TextEditingController _ctrlcourse = TextEditingController(text: 'BSIT');
+  final TextEditingController _ctrlSearch = TextEditingController(text: '');
   List<DropdownMenuItem<String>> items = [
     DropdownMenuItem(
       value: 'Male',
@@ -42,6 +45,72 @@ class _AddUserViewState extends State<AddUserView> {
     ),
   ];
   String selected = "Male";
+  // List<CourseModel> courseList = [];
+
+  // void getCourseList() async {
+  //   courseList = await CourseCtrl.getCourseListByName(_ctrlSearch.text);
+  // }
+
+  // Widget _buildSearchResultView() {
+  //   debugPrint("Called!");
+  //   if (_ctrlSearch.text.isEmpty) {
+  //     return ListTile(
+  //       leading: Text(
+  //         'Search Not Found',
+  //         textAlign: TextAlign.center,
+  //         style: Styles.p5.copyWith(
+  //           fontWeight: FontWeight.normal,
+  //           color: Styles.c4.withAlpha(165),
+  //         ),
+  //       ),
+  //     );
+  //   }
+
+  //   List<Widget> widgetList = [];
+  //   for (final course in courseList) {
+  //     widgetList.add(
+  //       ListTile(
+  //         leading: Text(
+  //           course.abbr,
+  //           textAlign: TextAlign.center,
+  //           style: Styles.p5.copyWith(
+  //             fontWeight: FontWeight.normal,
+  //             color: Styles.c4.withAlpha(165),
+  //           ),
+  //         ),
+  //         onTap: () {
+  //           setState(() {
+  //             _ctrlSearch.text = course.name;
+  //           });
+  //         },
+  //       ),
+  //     );
+  //   }
+
+  //   return Column(
+  //     children: widgetList,
+  //   );
+  // }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _ctrlfname.dispose();
+    _ctrlSearch.dispose();
+    _ctrlcourse.dispose();
+    _ctrlbdate.dispose();
+    _ctrlrfid.dispose();
+    _ctrlfname.dispose();
+    _ctrllname.dispose();
+    _ctrlmname.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,12 +120,6 @@ class _AddUserViewState extends State<AddUserView> {
           child: Container(
             decoration: BoxDecoration(
               color: Styles.c1,
-              // border: Border(
-              //   bottom: BorderSide(
-              //     color: Styles.c4.withAlpha(80),
-              //     width: 1,
-              //   ),
-              // ),
             ),
             child: Container(
               margin: const EdgeInsets.only(top: 15, left: 25),
@@ -73,7 +136,7 @@ class _AddUserViewState extends State<AddUserView> {
           ),
         ),
         Flexible(
-          flex: 20,
+          flex: 30,
           child: Container(
             margin: const EdgeInsets.only(left: 25, right: 25),
             child: Column(
@@ -83,12 +146,12 @@ class _AddUserViewState extends State<AddUserView> {
                   child: Row(
                     children: [
                       Flexible(
-                        child: Column(
-                          children: [
-                            Flexible(
-                              child: Container(
-                                margin:
-                                    const EdgeInsets.only(bottom: 20, top: 20),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Flexible(
                                 child: TextField(
                                   controller: _ctrlfname,
                                   decoration: Styles.id.copyWith(
@@ -97,10 +160,7 @@ class _AddUserViewState extends State<AddUserView> {
                                   style: Styles.tfts,
                                 ),
                               ),
-                            ),
-                            Flexible(
-                              child: Container(
-                                margin: const EdgeInsets.only(bottom: 20),
+                              Flexible(
                                 child: TextField(
                                   controller: _ctrlmname,
                                   decoration: Styles.id.copyWith(
@@ -109,10 +169,7 @@ class _AddUserViewState extends State<AddUserView> {
                                   style: Styles.tfts,
                                 ),
                               ),
-                            ),
-                            Flexible(
-                              child: Container(
-                                margin: const EdgeInsets.only(bottom: 20),
+                              Flexible(
                                 child: TextField(
                                   controller: _ctrllname,
                                   decoration: Styles.id.copyWith(
@@ -121,70 +178,152 @@ class _AddUserViewState extends State<AddUserView> {
                                   style: Styles.tfts,
                                 ),
                               ),
-                            ),
-                            Flexible(
-                              child: Row(
-                                children: [
-                                  Flexible(
-                                    child: Container(
-                                      padding: const EdgeInsets.only(right: 10),
-                                      child: TextField(
-                                        controller: _ctrlbdate,
-                                        decoration: Styles.id.copyWith(
-                                          label: const Text('Date Time'),
+                              Flexible(
+                                child: Row(
+                                  children: [
+                                    Flexible(
+                                      child: Container(
+                                        padding:
+                                            const EdgeInsets.only(right: 10),
+                                        child: TextField(
+                                          controller: _ctrlbdate,
+                                          decoration: Styles.id.copyWith(
+                                            label: const Text('Date Time'),
+                                          ),
+                                          style: Styles.tfts,
+                                          readOnly: true,
+                                          onTap: () async {
+                                            final res = await showDatePicker(
+                                              context: context,
+                                              firstDate: DateTime(
+                                                  DateTime.now().year - 120),
+                                              lastDate: DateTime.now(),
+                                            );
+                                            if (res != null) {
+                                              _ctrlbdate.text =
+                                                  "${res.month}/${res.day}/${res.year}";
+                                            }
+                                          },
                                         ),
-                                        style: Styles.tfts,
-                                        readOnly: true,
-                                        onTap: () async {
-                                          final res = await showDatePicker(
-                                            context: context,
-                                            firstDate: DateTime(
-                                                DateTime.now().year - 120),
-                                            lastDate: DateTime.now(),
-                                          );
-                                          if (res != null) {
-                                            _ctrlbdate.text =
-                                                "${res.month}/${res.day}/${res.year}";
-                                          }
-                                        },
                                       ),
                                     ),
-                                  ),
-                                  Flexible(
-                                    child: Container(
-                                      padding: const EdgeInsets.only(left: 10),
-                                      child: DropdownButton(
-                                          value: selected,
-                                          isDense: true,
-                                          isExpanded: true,
-                                          padding:
-                                              const EdgeInsets.only(top: 20),
-                                          focusColor: Styles.c3,
-                                          dropdownColor: Styles.c3,
-                                          items: items,
-                                          underline: Container(
-                                            decoration: BoxDecoration(
-                                              border: Border(
-                                                bottom: BorderSide(
-                                                  color:
-                                                      Styles.c4.withAlpha(120),
+                                    Flexible(
+                                      child: Container(
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
+                                        child: DropdownButton(
+                                            value: selected,
+                                            isDense: true,
+                                            isExpanded: true,
+                                            padding:
+                                                const EdgeInsets.only(top: 20),
+                                            focusColor: Styles.c3,
+                                            dropdownColor: Styles.c3,
+                                            items: items,
+                                            underline: Container(
+                                              decoration: BoxDecoration(
+                                                border: Border(
+                                                  bottom: BorderSide(
+                                                    color: Styles.c4
+                                                        .withAlpha(120),
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          onChanged: (data) {
-                                            setState(() {
-                                              selected = data.toString();
-                                            });
-                                          }),
+                                            onChanged: (data) {
+                                              setState(() {
+                                                selected = data.toString();
+                                              });
+                                            }),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            Flexible(
-                              child: Container(
-                                margin: const EdgeInsets.only(top: 20),
+                              Flexible(
+                                child: TextField(
+                                  controller: _ctrlcourse,
+                                  decoration: Styles.id.copyWith(
+                                    label: const Text('Course'),
+                                  ),
+                                  style: Styles.tfts,
+                                  readOnly: true,
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      useSafeArea: true,
+                                      builder: (context) {
+                                        List<CourseModel> courseList = [];
+                                        List<Widget> widgetList = [];
+                                        return StatefulBuilder(
+                                          builder: (context, setState) {
+                                            return SimpleDialog(
+                                              backgroundColor: Styles.c1,
+                                              title: TextField(
+                                                controller: _ctrlSearch,
+                                                decoration: Styles.id.copyWith(
+                                                  label: const Text(
+                                                      'Search Course'),
+                                                ),
+                                                style: Styles.tfts,
+                                                onChanged: (value) async {
+                                                  if (value.isEmpty) {
+                                                    return;
+                                                  }
+
+                                                  courseList = await CourseCtrl
+                                                      .getCourseListByName(
+                                                          value);
+                                                  debugPrint('Changed');
+                                                  widgetList = [];
+                                                  setState(() {
+                                                    debugPrint(
+                                                        'Refreshed: ${widgetList.length}');
+                                                    for (final course
+                                                        in courseList) {
+                                                      widgetList.add(
+                                                        ListTile(
+                                                          leading: Text(
+                                                            course.abbr,
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: Styles.p5
+                                                                .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal,
+                                                              color: Styles.c4
+                                                                  .withAlpha(
+                                                                      165),
+                                                            ),
+                                                          ),
+                                                          onTap: () {
+                                                            setState(
+                                                              () {
+                                                                _ctrlcourse
+                                                                        .text =
+                                                                    course.name;
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                            );
+                                                          },
+                                                        ),
+                                                      );
+                                                    }
+                                                  });
+                                                },
+                                              ),
+                                              children: widgetList,
+                                            );
+                                          },
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                              Flexible(
                                 child: TextField(
                                   controller: _ctrlrfid,
                                   keyboardType:
@@ -202,8 +341,8 @@ class _AddUserViewState extends State<AddUserView> {
                                   style: Styles.tfts,
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Flexible(
@@ -232,7 +371,7 @@ class _AddUserViewState extends State<AddUserView> {
           ),
         ),
         Flexible(
-          flex: 3,
+          flex: 5,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -255,6 +394,34 @@ class _AddUserViewState extends State<AddUserView> {
                     courseid: 1,
                   );
                   StudentCtrl.insertUser(model);
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return SimpleDialog(
+                        backgroundColor: Styles.c1,
+                        title: Text(
+                          'Registration Status',
+                          style: TextStyle(color: Styles.c4),
+                        ),
+                        children: [
+                          Center(
+                              child: Text(
+                            'Student added to database!',
+                            style: Styles.p5,
+                          )),
+                        ],
+                      );
+                    },
+                  );
+                  setState(() {
+                    _ctrlbdate.text = "1/1/1969";
+                    _ctrlmname.text = "Monexus";
+                    _ctrlfname.text = "Juan";
+                    _ctrllname.text = "Dela Cruz";
+                    _ctrlrfid.text = "000000FF";
+                    date.clear();
+                    selected = "Male";
+                  });
                 },
                 style: ButtonStyle(
                   backgroundColor:
