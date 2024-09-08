@@ -201,7 +201,6 @@ class _DataBaseViewState extends State<DataBaseView> {
       );
       darken = !darken;
     }
-
     return Column(
       children: [
         Flexible(
