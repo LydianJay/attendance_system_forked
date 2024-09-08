@@ -1,5 +1,3 @@
-import "package:flutter/material.dart";
-
 class StudentModel {
   final int rfid;
   final String fname;
