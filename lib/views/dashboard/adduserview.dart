@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:rfid_attendance_system/controller/course.dart';
 import 'package:rfid_attendance_system/controller/student.dart';
 import 'package:rfid_attendance_system/fonts/custom_icons.dart';
@@ -45,58 +44,6 @@ class _AddUserViewState extends State<AddUserView> {
     ),
   ];
   String selected = "Male";
-  // List<CourseModel> courseList = [];
-
-  // void getCourseList() async {
-  //   courseList = await CourseCtrl.getCourseListByName(_ctrlSearch.text);
-  // }
-
-  // Widget _buildSearchResultView() {
-  //   debugPrint("Called!");
-  //   if (_ctrlSearch.text.isEmpty) {
-  //     return ListTile(
-  //       leading: Text(
-  //         'Search Not Found',
-  //         textAlign: TextAlign.center,
-  //         style: Styles.p5.copyWith(
-  //           fontWeight: FontWeight.normal,
-  //           color: Styles.c4.withAlpha(165),
-  //         ),
-  //       ),
-  //     );
-  //   }
-
-  //   List<Widget> widgetList = [];
-  //   for (final course in courseList) {
-  //     widgetList.add(
-  //       ListTile(
-  //         leading: Text(
-  //           course.abbr,
-  //           textAlign: TextAlign.center,
-  //           style: Styles.p5.copyWith(
-  //             fontWeight: FontWeight.normal,
-  //             color: Styles.c4.withAlpha(165),
-  //           ),
-  //         ),
-  //         onTap: () {
-  //           setState(() {
-  //             _ctrlSearch.text = course.name;
-  //           });
-  //         },
-  //       ),
-  //     );
-  //   }
-
-  //   return Column(
-  //     children: widgetList,
-  //   );
-  // }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   void dispose() {
