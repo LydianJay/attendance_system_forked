@@ -35,6 +35,58 @@ class StudentCtrl {
     }
   }
 
+  static Future<StudentModel?>? searchStudent(int rfid) async {
+    final uri = Uri.http(DbConfig.ip,
+        "flutter-rfid-attendance-system-backend/fetch/search_student.php");
+
+    final header = {"Content-Type": "application/json"};
+    var req = http.Request('POST', uri);
+    req.body = "{ \"value\":\"$rfid\" }";
+    req.headers.addAll(header);
+    final response = await req.send();
+    if (response.statusCode == 200) {
+      final bytes = await response.stream.bytesToString();
+
+      final List<dynamic> result = jsonDecode(bytes);
+      if (result.isNotEmpty) {
+        final r = result.first;
+
+        return StudentModel(
+          rfid: rfid,
+          fname: r["fname"],
+          mname: r["mname"],
+          lname: r["lname"],
+          bday: int.parse(r["bday"]),
+          bmonth: int.parse(r["bmonth"]),
+          byear: int.parse(r["byear"]),
+          gender: int.parse(r["gender"]),
+          courseid: int.parse(r["courseID"]),
+        );
+      }
+    } else {
+      debugPrint("ERROR - Status Code: ${response.statusCode}");
+    }
+
+    return null;
+  }
+
+  static void modifyStudent(StudentModel student) async {
+    final uri = Uri.http(DbConfig.ip,
+        "flutter-rfid-attendance-system-backend/set/modify_student.php");
+
+    final header = {"Content-Type": "application/json"};
+    var req = http.Request('POST', uri);
+
+    req.body = student.toJsonString().toString();
+    req.headers.addAll(header);
+    final response = await req.send();
+    if (response.statusCode == 200) {
+      debugPrint(await response.stream.bytesToString());
+    } else {
+      debugPrint("ERROR - Status Code: ${response.statusCode}");
+    }
+  }
+
   static Future<List<int>> getStudentCount() async {
     final uri = Uri.http(DbConfig.ip,
         "flutter-rfid-attendance-system-backend/fetch/count_student.php");

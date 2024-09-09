@@ -1,3 +1,5 @@
+import 'package:rfid_attendance_system/model/coursemodel.dart';
+
 class StudentModel {
   final int rfid;
   final String fname;
@@ -8,16 +10,19 @@ class StudentModel {
   final int byear;
   final int gender;
   final int courseid;
-  StudentModel(
-      {required this.rfid,
-      required this.fname,
-      required this.mname,
-      required this.lname,
-      required this.bday,
-      required this.bmonth,
-      required this.byear,
-      required this.gender,
-      required this.courseid});
+  CourseModel? course;
+  StudentModel({
+    this.course,
+    required this.rfid,
+    required this.fname,
+    required this.mname,
+    required this.lname,
+    required this.bday,
+    required this.bmonth,
+    required this.byear,
+    required this.gender,
+    required this.courseid,
+  });
 
   Map<String, dynamic> toJSON() {
     return {

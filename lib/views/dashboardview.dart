@@ -3,6 +3,7 @@ import 'package:rfid_attendance_system/styles/styles.dart';
 import 'package:rfid_attendance_system/fonts/custom_icons.dart';
 import 'package:rfid_attendance_system/views/dashboard/adduserview.dart';
 import 'package:rfid_attendance_system/views/dashboard/databaseview.dart';
+import 'package:rfid_attendance_system/views/dashboard/modifyuserview.dart';
 
 class DashBoardView extends StatefulWidget {
   const DashBoardView({super.key});
@@ -20,6 +21,8 @@ class _DashBoardViewState extends State<DashBoardView> {
         return const DataBaseView();
       case 3:
         return const AddUserView();
+      case 4:
+        return const ModifyUserView();
     }
 
     return Container();
@@ -159,8 +162,8 @@ class _DashBoardViewState extends State<DashBoardView> {
                           },
                         ),
                         ListTile(
-                          title: const Text('Remove User'),
-                          leading: const Icon(CustomIcons.user_minus),
+                          title: const Text('Modify User'),
+                          leading: const Icon(CustomIcons.user_edit),
                           selected: _currentPanel == 4,
                           selectedColor: Styles.c4,
                           iconColor: Styles.c3,
@@ -168,19 +171,6 @@ class _DashBoardViewState extends State<DashBoardView> {
                           onTap: () {
                             setState(() {
                               _currentPanel = 4;
-                            });
-                          },
-                        ),
-                        ListTile(
-                          title: const Text('Edit User'),
-                          leading: const Icon(CustomIcons.user_edit),
-                          selected: _currentPanel == 5,
-                          selectedColor: Styles.c4,
-                          iconColor: Styles.c3,
-                          textColor: Styles.c3,
-                          onTap: () {
-                            setState(() {
-                              _currentPanel = 5;
                             });
                           },
                         ),

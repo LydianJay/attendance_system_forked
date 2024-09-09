@@ -34,4 +34,31 @@ class CourseCtrl {
     }
     return listModel;
   }
+
+  static Future<CourseModel?> getCourseByID(int rfid) async {
+    final uri = Uri.http(DbConfig.ip,
+        "flutter-rfid-attendance-system-backend/fetch/search_course.php");
+
+    final header = {"Content-Type": "application/json"};
+    var req = http.Request('POST', uri);
+    req.body = "{ \"value\":\"$rfid\" }";
+
+    req.headers.addAll(header);
+    final response = await req.send();
+    if (response.statusCode == 200) {
+      final result = await response.stream.bytesToString();
+      final List<dynamic> list = jsonDecode(result);
+
+      if (list.isNotEmpty) {
+        return CourseModel(
+          id: rfid,
+          name: list.first['name'],
+          abbr: list.first['abbr'],
+        );
+      }
+    } else {
+      debugPrint("ERROR - Status Code: ${response.statusCode}");
+    }
+    return null;
+  }
 }
