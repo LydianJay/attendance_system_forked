@@ -99,4 +99,9 @@ class StudentCtrl {
     }
     return [];
   }
+
+  static void deleteStudent() async {
+    final uri = Uri.http(DbConfig.ip,
+        "flutter-rfid-attendance-system-backend/fetch/count_student.php");
+  }
 }
