@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 08, 2024 at 01:04 PM
--- Server version: 8.3.0
+-- Generation Time: Sep 12, 2024 at 07:38 AM
+-- Server version: 8.0.39
 -- PHP Version: 8.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -29,13 +29,21 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `attendance`;
 CREATE TABLE IF NOT EXISTS `attendance` (
-  `rfid` int NOT NULL,
+  `rfid` bigint NOT NULL,
   `day` int NOT NULL,
   `month` int NOT NULL,
   `year` int NOT NULL,
   `time` varchar(32) NOT NULL,
-  `type` int NOT NULL
+  `type` int NOT NULL,
+  KEY `rfid` (`rfid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `attendance`
+--
+
+INSERT INTO `attendance` (`rfid`, `day`, `month`, `year`, `time`, `type`) VALUES
+(2899456032, 9, 10, 2024, '10:18', 1);
 
 -- --------------------------------------------------------
 
@@ -56,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `course` (
 --
 
 INSERT INTO `course` (`id`, `name`, `abbr`) VALUES
-(1, 'Bachelor of Science In Computer ', 'BSCS'),
+(1, 'Bachelor of Science In Computer Science', 'BSCS'),
 (2, 'Bachelor of Science In Information Technology', 'BSIT'),
 (3, 'Bachelor of Science in Information Security', 'BSIS');
 
@@ -77,7 +85,8 @@ CREATE TABLE IF NOT EXISTS `students` (
   `byear` int NOT NULL,
   `gender` int NOT NULL,
   `courseID` int NOT NULL,
-  PRIMARY KEY (`rfid`)
+  PRIMARY KEY (`rfid`),
+  KEY `courseID` (`courseID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4292717312 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -85,11 +94,12 @@ CREATE TABLE IF NOT EXISTS `students` (
 --
 
 INSERT INTO `students` (`rfid`, `fname`, `mname`, `lname`, `bday`, `bmonth`, `byear`, `gender`, `courseID`) VALUES
-(255, 'Juan', 'Monexus', 'Dela Cruz', 1, 1, 1969, 1, 1),
+(255, 'Juan', 'Monexus', 'Dela Cruz', 1, 1, 1969, 1, 0),
 (2899456032, 'Lloyd Jay', 'Arpilleda', 'Edradan', 20, 2, 2002, 1, 1),
 (3016504078, 'Honey Lynn', 'Arpilleda', 'Edradan', 4, 7, 2003, 0, 1),
 (4292717311, 'Vladimir', 'Dofensmirt', 'Putin', 17, 7, 1986, 0, 3),
-(2863311615, 'Lydian', 'Cubillan', 'Arpilleda', 20, 2, 2002, 1, 1);
+(2863311615, 'Lydian', 'Cubillan', 'Arpilleda', 20, 2, 2002, 1, 1),
+(1, 'Sam Mckimley', 'Monexus', 'Juanite', 16, 9, 1999, 1, 3);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

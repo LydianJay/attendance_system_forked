@@ -415,7 +415,35 @@ class _ModifyUserViewState extends State<ModifyUserView> {
                 icon: const Icon(CustomIcons.user_edit),
               ),
               ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () async {
+                  final result = await StudentCtrl.deleteStudent(
+                    int.parse(
+                      _ctrlrfid.text,
+                      radix: 16,
+                    ),
+                  );
+
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return SimpleDialog(
+                        backgroundColor: Styles.c1,
+                        title: Text(
+                          'Modify Status',
+                          style: TextStyle(color: Styles.c4),
+                        ),
+                        children: [
+                          Center(
+                            child: Text(
+                              result ? 'Student deleted' : 'Student Not Found',
+                              style: Styles.p5,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
                 style: ButtonStyle(
                   backgroundColor:
                       WidgetStatePropertyAll(Styles.c3.withAlpha(125)),

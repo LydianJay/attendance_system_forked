@@ -100,8 +100,26 @@ class StudentCtrl {
     return [];
   }
 
-  static void deleteStudent() async {
+  static Future<bool> deleteStudent(int rfid) async {
     final uri = Uri.http(DbConfig.ip,
-        "flutter-rfid-attendance-system-backend/fetch/count_student.php");
+        "flutter-rfid-attendance-system-backend/delete/delete_student.php");
+
+    final header = {"Content-Type": "application/json"};
+    var req = http.Request('POST', uri);
+    req.body = "{ \"value\":\"$rfid\" }";
+    req.headers.addAll(header);
+    final response = await req.send();
+    if (response.statusCode == 200) {
+      final bytes = await response.stream.bytesToString();
+
+      if (bytes.isNotEmpty) {
+        debugPrint(bytes.toString());
+        return bytes == "success";
+      }
+    } else {
+      debugPrint("ERROR - Status Code: ${response.statusCode}");
+    }
+
+    return false;
   }
 }

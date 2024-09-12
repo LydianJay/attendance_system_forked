@@ -37,7 +37,7 @@ class CourseCtrl {
 
   static Future<CourseModel?> getCourseByID(int rfid) async {
     final uri = Uri.http(DbConfig.ip,
-        "flutter-rfid-attendance-system-backend/fetch/search_course.php");
+        "flutter-rfid-attendance-system-backend/fetch/get_course_by_id.php");
 
     final header = {"Content-Type": "application/json"};
     var req = http.Request('POST', uri);
