@@ -24,9 +24,10 @@ class CourseCtrl {
       for (final jsonData in list) {
         listModel.add(
           CourseModel(
-              id: int.parse(jsonData['id']),
-              name: jsonData['name'],
-              abbr: jsonData['abbr']),
+            id: int.parse(jsonData['id']),
+            name: jsonData['name'],
+            abbr: jsonData['abbr'],
+          ),
         );
       }
     } else {

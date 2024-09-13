@@ -3,6 +3,7 @@ import 'package:rfid_attendance_system/styles/styles.dart';
 import 'package:rfid_attendance_system/fonts/custom_icons.dart';
 import 'package:rfid_attendance_system/views/dashboard/adduserview.dart';
 import 'package:rfid_attendance_system/views/dashboard/databaseview.dart';
+import 'package:rfid_attendance_system/views/dashboard/graphview.dart';
 import 'package:rfid_attendance_system/views/dashboard/modifyuserview.dart';
 
 class DashBoardView extends StatefulWidget {
@@ -13,12 +14,14 @@ class DashBoardView extends StatefulWidget {
 }
 
 class _DashBoardViewState extends State<DashBoardView> {
-  int _currentPanel = 3;
+  int _currentPanel = 1;
 
   Widget _buildRigthWidget() {
     switch (_currentPanel) {
       case 0:
         return const DataBaseView();
+      case 1:
+        return const GraphView();
       case 3:
         return const AddUserView();
       case 4:
