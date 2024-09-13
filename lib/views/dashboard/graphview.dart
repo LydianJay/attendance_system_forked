@@ -80,7 +80,7 @@ class _GraphViewState extends State<GraphView> {
               return entry.day;
             },
             yValueMapper: (entry, time) {
-              return entry.hour;
+              return entry.hour + (entry.min / 60);
             },
             pointColorMapper: (datum, index) {
               return datum.type == 1 ? Colors.green : Colors.red;

@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 12, 2024 at 07:38 AM
--- Server version: 8.0.39
+-- Generation Time: Sep 13, 2024 at 03:21 PM
+-- Server version: 8.3.0
 -- PHP Version: 8.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -43,7 +43,22 @@ CREATE TABLE IF NOT EXISTS `attendance` (
 --
 
 INSERT INTO `attendance` (`rfid`, `day`, `month`, `year`, `time`, `type`) VALUES
-(2899456032, 9, 10, 2024, '10:18', 1);
+(172210482, 13, 9, 2024, '21:55', 1),
+(1792045114, 13, 9, 2024, '21:55', 1),
+(172210482, 13, 9, 2024, '22:20', 0),
+(1792045114, 13, 9, 2024, '22:30', 0),
+(172210482, 14, 9, 2024, '08:30', 1),
+(1792045114, 14, 9, 2024, '08:38', 1),
+(172210482, 14, 9, 2024, '18:36', 0),
+(1792045114, 14, 9, 2024, '18:37', 0),
+(172210482, 15, 9, 2024, '07:19', 1),
+(1792045114, 15, 9, 2024, '07:19', 1),
+(172210482, 15, 9, 2024, '16:44', 0),
+(1792045114, 15, 9, 2024, '20:17', 0),
+(1792045114, 16, 9, 2024, '22:50', 1),
+(1792045114, 16, 9, 2024, '22:51', 0),
+(172210482, 16, 9, 2024, '22:51', 1),
+(172210482, 16, 9, 2024, '22:51', 0);
 
 -- --------------------------------------------------------
 
@@ -95,11 +110,12 @@ CREATE TABLE IF NOT EXISTS `students` (
 
 INSERT INTO `students` (`rfid`, `fname`, `mname`, `lname`, `bday`, `bmonth`, `byear`, `gender`, `courseID`) VALUES
 (255, 'Juan', 'Monexus', 'Dela Cruz', 1, 1, 1969, 1, 0),
-(2899456032, 'Lloyd Jay', 'Arpilleda', 'Edradan', 20, 2, 2002, 1, 1),
+(2899456002, 'Lloyd Jay', 'Arpilleda', 'Edradan', 20, 2, 2002, 1, 1),
 (3016504078, 'Honey Lynn', 'Arpilleda', 'Edradan', 4, 7, 2003, 0, 1),
 (4292717311, 'Vladimir', 'Dofensmirt', 'Putin', 17, 7, 1986, 0, 3),
 (2863311615, 'Lydian', 'Cubillan', 'Arpilleda', 20, 2, 2002, 1, 1),
-(1, 'Sam Mckimley', 'Monexus', 'Juanite', 16, 9, 1999, 1, 3);
+(1, 'Sam Mckimley', 'Monexus', 'Juanite', 16, 9, 1999, 1, 3),
+(30165078, 'Nexus', 'Gaming', 'Test', 1, 1, 1969, 1, 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
