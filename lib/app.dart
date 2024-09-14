@@ -14,6 +14,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const DashBoardView(),
+      routes: {
+        '/login': (context) => const LoginView(),
+        '/dashboard': (context) => const DashBoardView(),
+      },
+      initialRoute: '/login',
     );
   }
 }

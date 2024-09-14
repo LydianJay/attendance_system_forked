@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rfid_attendance_system/controller/auth.dart';
 import 'package:rfid_attendance_system/styles/styles.dart';
 
 class LoginView extends StatefulWidget {
@@ -139,7 +140,34 @@ class _LoginViewState extends State<LoginView> {
                     Container(
                       margin: const EdgeInsets.only(top: 10),
                       child: TextButton.icon(
-                        onPressed: () {},
+                        onPressed: () async {
+                          bool isLogin = await Authenticator.authenticateAdmin(
+                              _ctrlUsername.text, _ctrlPassword.text);
+                          if (isLogin) {
+                            Navigator.pushNamed(context, '/dashboard');
+                          } else {
+                            _ctrlPassword.clear();
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return SimpleDialog(
+                                  backgroundColor: Styles.c1,
+                                  title: Text(
+                                    'Login Failed',
+                                    style: TextStyle(color: Styles.c4),
+                                  ),
+                                  children: [
+                                    Center(
+                                        child: Text(
+                                      'Password or Username Incorrect!',
+                                      style: Styles.p5,
+                                    )),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                        },
                         icon: const Icon(Icons.login_sharp),
                         label: const Text('Login'),
                         style: ButtonStyle(
