@@ -101,4 +101,12 @@ class Styles {
       ),
     ),
   );
+
+  static EdgeInsetsGeometry hpad = const EdgeInsets.symmetric(horizontal: 25);
+  static EdgeInsetsGeometry vpad = const EdgeInsets.symmetric(vertical: 15);
+  static ButtonStyle bstyle1 = ButtonStyle(
+    backgroundColor: WidgetStatePropertyAll(Styles.c3.withAlpha(125)),
+    iconColor: WidgetStatePropertyAll(Styles.c4.withAlpha(125)),
+    foregroundColor: WidgetStatePropertyAll(Styles.c4.withAlpha(125)),
+  );
 }

@@ -47,7 +47,7 @@ class _ModifyUserViewState extends State<ModifyUserView> {
   ];
   String selected = "Male";
   int courseIDselected = 0;
-  int nstpID = 0;
+  int nstpID = 1;
   @override
   Widget build(BuildContext context) {
     return Column(

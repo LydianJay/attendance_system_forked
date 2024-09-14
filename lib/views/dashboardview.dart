@@ -14,7 +14,7 @@ class DashBoardView extends StatefulWidget {
 }
 
 class _DashBoardViewState extends State<DashBoardView> {
-  int _currentPanel = 1;
+  int _currentPanel = 0;
 
   Widget _buildRigthWidget() {
     switch (_currentPanel) {
@@ -120,19 +120,19 @@ class _DashBoardViewState extends State<DashBoardView> {
                             });
                           },
                         ),
-                        ListTile(
-                          title: const Text('Search'),
-                          leading: const Icon(CustomIcons.search),
-                          selected: _currentPanel == 2,
-                          selectedColor: Styles.c4,
-                          iconColor: Styles.c3,
-                          textColor: Styles.c3,
-                          onTap: () {
-                            setState(() {
-                              _currentPanel = 2;
-                            });
-                          },
-                        ),
+                        // ListTile(
+                        //   title: const Text('Search'),
+                        //   leading: const Icon(CustomIcons.search),
+                        //   selected: _currentPanel == 2,
+                        //   selectedColor: Styles.c4,
+                        //   iconColor: Styles.c3,
+                        //   textColor: Styles.c3,
+                        //   onTap: () {
+                        //     setState(() {
+                        //       _currentPanel = 2;
+                        //     });
+                        //   },
+                        // ),
                         Container(
                           margin: const EdgeInsets.only(top: 25),
                           decoration: BoxDecoration(

@@ -164,29 +164,30 @@ class _AddUserViewState extends State<AddUserView> {
                                         padding:
                                             const EdgeInsets.only(left: 10),
                                         child: DropdownButton(
-                                            value: selected,
-                                            isDense: true,
-                                            isExpanded: true,
-                                            padding:
-                                                const EdgeInsets.only(top: 20),
-                                            focusColor: Styles.c3,
-                                            dropdownColor: Styles.c3,
-                                            items: items,
-                                            underline: Container(
-                                              decoration: BoxDecoration(
-                                                border: Border(
-                                                  bottom: BorderSide(
-                                                    color: Styles.c4
-                                                        .withAlpha(120),
-                                                  ),
+                                          value: selected,
+                                          isDense: true,
+                                          isExpanded: true,
+                                          padding:
+                                              const EdgeInsets.only(top: 20),
+                                          focusColor: Styles.c3,
+                                          dropdownColor: Styles.c3,
+                                          items: items,
+                                          underline: Container(
+                                            decoration: BoxDecoration(
+                                              border: Border(
+                                                bottom: BorderSide(
+                                                  color:
+                                                      Styles.c4.withAlpha(120),
                                                 ),
                                               ),
                                             ),
-                                            onChanged: (data) {
-                                              setState(() {
-                                                selected = data.toString();
-                                              });
-                                            }),
+                                          ),
+                                          onChanged: (data) {
+                                            setState(() {
+                                              selected = data.toString();
+                                            });
+                                          },
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -493,13 +494,7 @@ class _AddUserViewState extends State<AddUserView> {
                     selected = "Male";
                   });
                 },
-                style: ButtonStyle(
-                  backgroundColor:
-                      WidgetStatePropertyAll(Styles.c3.withAlpha(125)),
-                  iconColor: WidgetStatePropertyAll(Styles.c4.withAlpha(125)),
-                  foregroundColor:
-                      WidgetStatePropertyAll(Styles.c4.withAlpha(125)),
-                ),
+                style: Styles.bstyle1,
                 label: const Text('Register'),
                 icon: const Icon(CustomIcons.user_plus),
               )
