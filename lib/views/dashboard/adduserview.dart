@@ -461,6 +461,7 @@ class _AddUserViewState extends State<AddUserView> {
                     byear: int.parse(date.last),
                     gender: selected == "Male" ? 1 : 0,
                     courseid: courseIDselected,
+                    nstpid: nstpID,
                   );
                   StudentCtrl.insertUser(model);
                   showDialog(

@@ -170,6 +170,37 @@ class _DataBaseViewState extends State<DataBaseView> {
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border(
+                            bottom: BorderSide(
+                              color: Styles.c4.withAlpha(100),
+                              width: 1.2,
+                            ),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Styles.c3,
+                              blurRadius: 0.4,
+                              blurStyle: BlurStyle.outer,
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          row['abbr'],
+                          textAlign: TextAlign.center,
+                          style: tStyle,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Flexible(
+                flex: 5,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
                             right: BorderSide(
                               color: Styles.c4.withAlpha(100),
                               width: 1.2,
@@ -276,6 +307,20 @@ class _DataBaseViewState extends State<DataBaseView> {
                       Expanded(
                         child: Text(
                           'Midle Name',
+                          textAlign: TextAlign.center,
+                          style: headerStyle,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  flex: 5,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'NSTP',
                           textAlign: TextAlign.center,
                           style: headerStyle,
                         ),

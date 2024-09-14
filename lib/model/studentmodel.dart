@@ -1,4 +1,5 @@
 import 'package:rfid_attendance_system/model/coursemodel.dart';
+import 'package:rfid_attendance_system/model/nstpcoursemodel.dart';
 
 class StudentModel {
   final int rfid;
@@ -10,9 +11,12 @@ class StudentModel {
   final int byear;
   final int gender;
   final int courseid;
+  final int nstpid;
   CourseModel? course;
+  NTSPCourseModel? nstp;
   StudentModel({
     this.course,
+    this.nstp,
     required this.rfid,
     required this.fname,
     required this.mname,
@@ -22,6 +26,7 @@ class StudentModel {
     required this.byear,
     required this.gender,
     required this.courseid,
+    required this.nstpid,
   });
 
   Map<String, dynamic> toJSON() {
@@ -35,6 +40,7 @@ class StudentModel {
       "byear": byear,
       "gender": gender,
       "courseID": courseid,
+      "nstpID": nstpid,
     };
   }
 
@@ -49,6 +55,7 @@ class StudentModel {
       "\"byear\"": "\"${byear.toString()}\"",
       "\"gender\"": "\"${gender.toString()}\"",
       "\"courseID\"": "\"${courseid.toString()}\"",
+      "\"nstpID\"": "\"${nstpid.toString()}\"",
     };
   }
 }

@@ -61,6 +61,7 @@ class StudentCtrl {
           byear: int.parse(r["byear"]),
           gender: int.parse(r["gender"]),
           courseid: int.parse(r["courseID"]),
+          nstpid: int.parse(r["nstpID"]),
         );
       }
     } else {

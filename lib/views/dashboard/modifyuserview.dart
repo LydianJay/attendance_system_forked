@@ -495,6 +495,7 @@ class _ModifyUserViewState extends State<ModifyUserView> {
                     byear: int.parse(date.last),
                     gender: selected == "Male" ? 1 : 0,
                     courseid: courseIDselected,
+                    nstpid: nstpID,
                   );
 
                   showDialog(
