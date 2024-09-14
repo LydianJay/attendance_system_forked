@@ -3,6 +3,7 @@ import 'package:rfid_attendance_system/controller/course.dart';
 import 'package:rfid_attendance_system/controller/student.dart';
 import 'package:rfid_attendance_system/fonts/custom_icons.dart';
 import 'package:rfid_attendance_system/model/coursemodel.dart';
+import 'package:rfid_attendance_system/model/nstpcoursemodel.dart';
 import 'package:rfid_attendance_system/model/studentmodel.dart';
 import 'package:rfid_attendance_system/styles/styles.dart';
 import 'package:rfid_attendance_system/fonts/icon_set_icons.dart';
@@ -26,7 +27,9 @@ class _AddUserViewState extends State<AddUserView> {
   final TextEditingController _ctrlrfid =
       TextEditingController(text: '000000FF');
   final TextEditingController _ctrlcourse = TextEditingController(text: 'BSIT');
+  final TextEditingController _ctrlnstp = TextEditingController(text: 'ROTC');
   final TextEditingController _ctrlSearch = TextEditingController(text: '');
+
   List<DropdownMenuItem<String>> items = [
     DropdownMenuItem(
       value: 'Male',
@@ -45,6 +48,7 @@ class _AddUserViewState extends State<AddUserView> {
   ];
   String selected = "Male";
   int courseIDselected = 0;
+  int nstpID = 0;
 
   @override
   void dispose() {
@@ -189,88 +193,203 @@ class _AddUserViewState extends State<AddUserView> {
                                 ),
                               ),
                               Flexible(
-                                child: TextField(
-                                  controller: _ctrlcourse,
-                                  decoration: Styles.id.copyWith(
-                                    label: const Text('Course'),
-                                  ),
-                                  style: Styles.tfts,
-                                  readOnly: true,
-                                  onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      useSafeArea: true,
-                                      builder: (context) {
-                                        List<CourseModel> courseList = [];
-                                        List<Widget> widgetList = [];
-                                        return StatefulBuilder(
-                                          builder: (context, setState) {
-                                            return SimpleDialog(
-                                              backgroundColor: Styles.c1,
-                                              title: TextField(
-                                                controller: _ctrlSearch,
-                                                decoration: Styles.id.copyWith(
-                                                  label: const Text(
-                                                      'Search Course'),
-                                                ),
-                                                style: Styles.tfts,
-                                                onChanged: (value) async {
-                                                  if (value.isEmpty) {
-                                                    return;
-                                                  }
-
-                                                  courseList = await CourseCtrl
-                                                      .getCourseListByName(
-                                                          value);
-                                                  debugPrint('Changed');
-                                                  widgetList = [];
-                                                  setState(() {
-                                                    debugPrint(
-                                                        'Refreshed: ${widgetList.length}');
-                                                    for (final course
-                                                        in courseList) {
-                                                      widgetList.add(
-                                                        ListTile(
-                                                          leading: Text(
-                                                            course.abbr,
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: Styles.p5
-                                                                .copyWith(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .normal,
-                                                              color: Styles.c4
-                                                                  .withAlpha(
-                                                                      165),
-                                                            ),
-                                                          ),
-                                                          onTap: () {
-                                                            setState(
-                                                              () {
-                                                                _ctrlcourse
-                                                                        .text =
-                                                                    course.name;
-                                                                courseIDselected =
-                                                                    course.id;
-                                                                Navigator.pop(
-                                                                    context);
-                                                              },
-                                                            );
-                                                          },
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Flexible(
+                                      child: Container(
+                                        padding:
+                                            const EdgeInsets.only(right: 10),
+                                        child: TextField(
+                                          controller: _ctrlcourse,
+                                          decoration: Styles.id.copyWith(
+                                            label: const Text('Course'),
+                                          ),
+                                          style: Styles.tfts,
+                                          readOnly: true,
+                                          onTap: () {
+                                            showDialog(
+                                              context: context,
+                                              useSafeArea: true,
+                                              builder: (context) {
+                                                List<CourseModel> courseList =
+                                                    [];
+                                                List<Widget> widgetList = [];
+                                                return StatefulBuilder(
+                                                  builder: (context, setState) {
+                                                    return SimpleDialog(
+                                                      backgroundColor:
+                                                          Styles.c1,
+                                                      title: TextField(
+                                                        controller: _ctrlSearch,
+                                                        decoration:
+                                                            Styles.id.copyWith(
+                                                          label: const Text(
+                                                              'Search Course'),
                                                         ),
-                                                      );
-                                                    }
-                                                  });
-                                                },
-                                              ),
-                                              children: widgetList,
+                                                        style: Styles.tfts,
+                                                        onChanged:
+                                                            (value) async {
+                                                          if (value.isEmpty) {
+                                                            return;
+                                                          }
+
+                                                          courseList =
+                                                              await CourseCtrl
+                                                                  .getCourseListByName(
+                                                                      value);
+                                                          debugPrint('Changed');
+                                                          widgetList = [];
+                                                          setState(() {
+                                                            debugPrint(
+                                                                'Refreshed: ${widgetList.length}');
+                                                            for (final course
+                                                                in courseList) {
+                                                              widgetList.add(
+                                                                ListTile(
+                                                                  leading: Text(
+                                                                    course.abbr,
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style: Styles
+                                                                        .p5
+                                                                        .copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      color: Styles
+                                                                          .c4
+                                                                          .withAlpha(
+                                                                              165),
+                                                                    ),
+                                                                  ),
+                                                                  onTap: () {
+                                                                    setState(
+                                                                      () {
+                                                                        _ctrlcourse.text =
+                                                                            course.abbr;
+                                                                        courseIDselected =
+                                                                            course.id;
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                      },
+                                                                    );
+                                                                  },
+                                                                ),
+                                                              );
+                                                            }
+                                                          });
+                                                        },
+                                                      ),
+                                                      children: widgetList,
+                                                    );
+                                                  },
+                                                );
+                                              },
                                             );
                                           },
-                                        );
-                                      },
-                                    );
-                                  },
+                                        ),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: Container(
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
+                                        child: TextField(
+                                          controller: _ctrlnstp,
+                                          decoration: Styles.id.copyWith(
+                                            label: const Text('NSTP'),
+                                          ),
+                                          style: Styles.tfts,
+                                          readOnly: true,
+                                          onTap: () {
+                                            showDialog(
+                                              context: context,
+                                              useSafeArea: true,
+                                              builder: (context) {
+                                                List<NTSPCourseModel>
+                                                    courseList = [];
+                                                List<Widget> widgetList = [];
+                                                return StatefulBuilder(
+                                                  builder: (context, setState) {
+                                                    return SimpleDialog(
+                                                      backgroundColor:
+                                                          Styles.c1,
+                                                      title: TextField(
+                                                        controller: _ctrlSearch,
+                                                        decoration:
+                                                            Styles.id.copyWith(
+                                                          label: const Text(
+                                                              'Search NSTP'),
+                                                        ),
+                                                        style: Styles.tfts,
+                                                        onChanged:
+                                                            (value) async {
+                                                          if (value.isEmpty) {
+                                                            return;
+                                                          }
+
+                                                          courseList =
+                                                              await CourseCtrl
+                                                                  .getNSTPListByName(
+                                                                      value);
+                                                          debugPrint('Changed');
+                                                          widgetList = [];
+                                                          setState(() {
+                                                            debugPrint(
+                                                                'Refreshed: ${widgetList.length}');
+                                                            for (final course
+                                                                in courseList) {
+                                                              widgetList.add(
+                                                                ListTile(
+                                                                  leading: Text(
+                                                                    course.abbr,
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style: Styles
+                                                                        .p5
+                                                                        .copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                      color: Styles
+                                                                          .c4
+                                                                          .withAlpha(
+                                                                              165),
+                                                                    ),
+                                                                  ),
+                                                                  onTap: () {
+                                                                    setState(
+                                                                      () {
+                                                                        _ctrlnstp.text =
+                                                                            course.abbr;
+                                                                        nstpID =
+                                                                            course.id;
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                      },
+                                                                    );
+                                                                  },
+                                                                ),
+                                                              );
+                                                            }
+                                                          });
+                                                        },
+                                                      ),
+                                                      children: widgetList,
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               Flexible(

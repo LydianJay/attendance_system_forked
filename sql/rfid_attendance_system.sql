@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 13, 2024 at 03:21 PM
--- Server version: 8.3.0
+-- Generation Time: Sep 14, 2024 at 01:57 AM
+-- Server version: 8.0.39
 -- PHP Version: 8.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -86,6 +86,29 @@ INSERT INTO `course` (`id`, `name`, `abbr`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `nstp_course`
+--
+
+DROP TABLE IF EXISTS `nstp_course`;
+CREATE TABLE IF NOT EXISTS `nstp_course` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  `abbr` varchar(8) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `nstp_course`
+--
+
+INSERT INTO `nstp_course` (`id`, `name`, `abbr`) VALUES
+(1, 'Reserve Officers Training Corps', 'ROTC'),
+(2, 'Civic Welfare Training Service', 'CWTS'),
+(3, 'Literacy Training Service', 'LTS');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `students`
 --
 
@@ -100,22 +123,24 @@ CREATE TABLE IF NOT EXISTS `students` (
   `byear` int NOT NULL,
   `gender` int NOT NULL,
   `courseID` int NOT NULL,
+  `nstpID` int UNSIGNED NOT NULL,
   PRIMARY KEY (`rfid`),
-  KEY `courseID` (`courseID`)
+  KEY `courseID` (`courseID`),
+  KEY `nstpID` (`nstpID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4292717312 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`rfid`, `fname`, `mname`, `lname`, `bday`, `bmonth`, `byear`, `gender`, `courseID`) VALUES
-(255, 'Juan', 'Monexus', 'Dela Cruz', 1, 1, 1969, 1, 0),
-(2899456002, 'Lloyd Jay', 'Arpilleda', 'Edradan', 20, 2, 2002, 1, 1),
-(3016504078, 'Honey Lynn', 'Arpilleda', 'Edradan', 4, 7, 2003, 0, 1),
-(4292717311, 'Vladimir', 'Dofensmirt', 'Putin', 17, 7, 1986, 0, 3),
-(2863311615, 'Lydian', 'Cubillan', 'Arpilleda', 20, 2, 2002, 1, 1),
-(1, 'Sam Mckimley', 'Monexus', 'Juanite', 16, 9, 1999, 1, 3),
-(30165078, 'Nexus', 'Gaming', 'Test', 1, 1, 1969, 1, 1);
+INSERT INTO `students` (`rfid`, `fname`, `mname`, `lname`, `bday`, `bmonth`, `byear`, `gender`, `courseID`, `nstpID`) VALUES
+(255, 'Juan', 'Monexus', 'Dela Cruz', 1, 1, 1969, 1, 0, 1),
+(2899456002, 'Lloyd Jay', 'Arpilleda', 'Edradan', 20, 2, 2002, 1, 1, 1),
+(3016504078, 'Honey Lynn', 'Arpilleda', 'Edradan', 4, 7, 2003, 0, 1, 1),
+(4292717311, 'Vladimir', 'Dofensmirt', 'Putin', 17, 7, 1986, 0, 3, 1),
+(2863311615, 'Lydian', 'Cubillan', 'Arpilleda', 20, 2, 2002, 1, 1, 1),
+(1, 'Sam Mckimley', 'Monexus', 'Juanite', 16, 9, 1999, 1, 3, 1),
+(30165078, 'Nexus', 'Gaming', 'Test', 1, 1, 1969, 1, 1, 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
