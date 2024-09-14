@@ -13,7 +13,7 @@ void main() async {
     skipTaskbar: false,
     titleBarStyle: TitleBarStyle.normal,
     windowButtonVisibility: false,
-    title: "RFID Attendance System",
+    title: "NEMSU RFIDAS",
   );
   windowManager.waitUntilReadyToShow(
     windowOptions,
