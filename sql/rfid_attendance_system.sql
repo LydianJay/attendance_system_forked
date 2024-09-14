@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 14, 2024 at 01:57 AM
+-- Generation Time: Sep 14, 2024 at 06:14 AM
 -- Server version: 8.0.39
 -- PHP Version: 8.2.18
 
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `rfid_attendance_system`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE IF NOT EXISTS `admin` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `uname` varchar(32) NOT NULL,
+  `pass` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `uname`, `pass`) VALUES
+(1, 'admin', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9');
 
 -- --------------------------------------------------------
 
@@ -135,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `students` (
 
 INSERT INTO `students` (`rfid`, `fname`, `mname`, `lname`, `bday`, `bmonth`, `byear`, `gender`, `courseID`, `nstpID`) VALUES
 (255, 'Juan', 'Monexus', 'Dela Cruz', 1, 1, 1969, 1, 0, 1),
-(2899456002, 'Lloyd Jay', 'Arpilleda', 'Edradan', 20, 2, 2002, 1, 1, 1),
+(2899456002, 'Lloyd Jay', 'Arpilleda', 'Edradan', 20, 2, 2002, 1, 0, 2),
 (3016504078, 'Honey Lynn', 'Arpilleda', 'Edradan', 4, 7, 2003, 0, 1, 1),
 (4292717311, 'Vladimir', 'Dofensmirt', 'Putin', 17, 7, 1986, 0, 3, 1),
 (2863311615, 'Lydian', 'Cubillan', 'Arpilleda', 20, 2, 2002, 1, 1, 1),
