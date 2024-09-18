@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rfid_attendance_system/views/dashboardview.dart';
 import 'package:rfid_attendance_system/views/loginview.dart';
+import 'package:rfid_attendance_system/views/settings.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => const LoginView(),
         '/dashboard': (context) => const DashBoardView(),
+        '/settings': (context) => const SettingsView(),
       },
       initialRoute: '/login',
     );

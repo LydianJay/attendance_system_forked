@@ -24,8 +24,24 @@ class _LoginViewState extends State<LoginView> {
             color: Styles.c1,
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Container(
+                margin: const EdgeInsets.only(top: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/settings');
+                      },
+                      label: const Text('Settings'),
+                      style: Styles.bstyle1,
+                      icon: const Icon(Icons.settings),
+                    ),
+                  ],
+                ),
+              ),
               Container(
                 width: scrWidth * 0.75,
                 height: scrHeight * 0.65,
@@ -34,6 +50,7 @@ class _LoginViewState extends State<LoginView> {
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: Styles.c4),
                 ),
+                margin: const EdgeInsets.only(bottom: 80),
                 child: Column(
                   children: [
                     Container(
