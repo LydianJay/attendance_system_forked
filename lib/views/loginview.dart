@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_launcher_icons/config/config.dart';
 import 'package:rfid_attendance_system/config/dbconfig.dart';
 import 'package:rfid_attendance_system/controller/auth.dart';
 import 'package:rfid_attendance_system/styles/styles.dart';
