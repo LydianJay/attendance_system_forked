@@ -86,6 +86,7 @@ class AttendanceCtrl {
 
     if (response.statusCode == 200) {
       final bytes = await response.stream.bytesToString();
+      debugPrint("From Controller: $bytes");
       final List<dynamic> list = jsonDecode(bytes);
       for (final jsonData in list) {
         attendance.add(
@@ -104,6 +105,8 @@ class AttendanceCtrl {
         );
       }
       return attendance;
+    } else {
+      debugPrint("Fetching attendance error ${response.statusCode}");
     }
     return [];
   }

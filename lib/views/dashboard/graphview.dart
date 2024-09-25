@@ -74,7 +74,7 @@ class _GraphViewState extends State<GraphView> {
       max,
       currentYear,
     );
-
+    debugPrint("Data Recv: ${csvData.toString()}");
     for (final v in csvData) {
       data += "${v.toStringCSV()}\n";
     }

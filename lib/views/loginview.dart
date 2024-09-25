@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_launcher_icons/config/config.dart';
+import 'package:rfid_attendance_system/config/dbconfig.dart';
 import 'package:rfid_attendance_system/controller/auth.dart';
 import 'package:rfid_attendance_system/styles/styles.dart';
 
@@ -12,6 +16,20 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final TextEditingController _ctrlUsername = TextEditingController();
   final TextEditingController _ctrlPassword = TextEditingController();
+
+  void loadSettings() async {
+    File file = File('config.cfg');
+    if (await file.exists()) {
+      DbConfig.ip = await file.readAsString();
+    } else {}
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadSettings();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,31 +176,111 @@ class _LoginViewState extends State<LoginView> {
                       margin: const EdgeInsets.only(top: 10),
                       child: TextButton.icon(
                         onPressed: () async {
+                          bool alreadyPop = false;
+                          bool connectionError = false;
+                          bool canPop = false;
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return PopScope(
+                                onPopInvokedWithResult: (didPop, result) {
+                                  if (alreadyPop) return;
+
+                                  if (canPop) {
+                                    debugPrint("Popping...");
+                                    alreadyPop = true;
+                                  }
+                                },
+                                canPop: false,
+                                child: AlertDialog(
+                                  backgroundColor: Styles.c1,
+                                  title: Text(
+                                    'Establishing Connection',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(color: Styles.c4),
+                                  ),
+                                  actions: [
+                                    Container(
+                                      margin: const EdgeInsets.only(bottom: 10),
+                                      child: Center(
+                                          child: Text(
+                                        'Connecting to ${DbConfig.ip}...',
+                                        style: Styles.p5,
+                                      )),
+                                    ),
+                                    const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Flexible(
+                                          child: CircularProgressIndicator
+                                              .adaptive(),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+
                           bool isLogin = await Authenticator.authenticateAdmin(
-                              _ctrlUsername.text, _ctrlPassword.text);
-                          if (isLogin) {
-                            Navigator.pushNamed(context, '/dashboard');
-                          } else {
-                            _ctrlPassword.clear();
+                                  _ctrlUsername.text, _ctrlPassword.text)
+                              .onError((E, stacktrace) {
+                            debugPrint(stacktrace.toString());
+                            connectionError = true;
+                            canPop = true;
+                            Navigator.of(context).pop();
                             showDialog(
                               context: context,
                               builder: (context) {
                                 return SimpleDialog(
                                   backgroundColor: Styles.c1,
                                   title: Text(
-                                    'Login Failed',
+                                    'Connection Timeout',
                                     style: TextStyle(color: Styles.c4),
                                   ),
                                   children: [
                                     Center(
                                         child: Text(
-                                      'Password or Username Incorrect!',
+                                      'Could not connect to server',
                                       style: Styles.p5,
                                     )),
                                   ],
                                 );
                               },
                             );
+                            return false;
+                          });
+                          canPop = true;
+
+                          if (isLogin) {
+                            Navigator.pushNamed(context, '/dashboard');
+                          } else {
+                            _ctrlPassword.clear();
+
+                            if (!connectionError) {
+                              Navigator.of(context).pop();
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return SimpleDialog(
+                                    backgroundColor: Styles.c1,
+                                    title: Text(
+                                      'Login Failed',
+                                      style: TextStyle(color: Styles.c4),
+                                    ),
+                                    children: [
+                                      Center(
+                                          child: Text(
+                                        'Password or Username Incorrect!',
+                                        style: Styles.p5,
+                                      )),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
                           }
                         },
                         icon: const Icon(Icons.login_sharp),
