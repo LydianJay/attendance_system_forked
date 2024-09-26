@@ -47,8 +47,8 @@ class _AddUserViewState extends State<AddUserView> {
     ),
   ];
   String selected = "Male";
-  int courseIDselected = 0;
-  int nstpID = 0;
+  int courseIDselected = 1;
+  int nstpID = 2;
 
   @override
   void dispose() {

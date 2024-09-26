@@ -401,6 +401,16 @@ class _DataBaseViewState extends State<DataBaseView> {
                             decoration: BoxDecoration(
                               color: Styles.c2,
                               borderRadius: BorderRadius.circular(8),
+                              border:
+                                  Border.all(color: Styles.c4.withAlpha(125)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Styles.c4.withAlpha(125),
+                                  blurRadius: 1.0,
+                                  spreadRadius: 0.45,
+                                  blurStyle: BlurStyle.normal,
+                                ),
+                              ],
                             ),
                             child: Column(
                               children: [
@@ -443,6 +453,16 @@ class _DataBaseViewState extends State<DataBaseView> {
                             decoration: BoxDecoration(
                               color: Styles.c2,
                               borderRadius: BorderRadius.circular(8),
+                              border:
+                                  Border.all(color: Styles.c4.withAlpha(125)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Styles.c4.withAlpha(125),
+                                  blurRadius: 1.0,
+                                  spreadRadius: 0.45,
+                                  blurStyle: BlurStyle.normal,
+                                ),
+                              ],
                             ),
                             child: Column(
                               children: [
@@ -504,6 +524,17 @@ class _DataBaseViewState extends State<DataBaseView> {
                 }
                 return Container(
                   margin: const EdgeInsets.only(top: 100),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Styles.c4.withAlpha(125)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Styles.c4.withAlpha(125),
+                        blurRadius: 1.0,
+                        spreadRadius: 0.45,
+                        blurStyle: BlurStyle.normal,
+                      ),
+                    ],
+                  ),
                   child: Text(
                     'Data not available',
                     textAlign: TextAlign.center,
