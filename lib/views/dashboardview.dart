@@ -4,6 +4,7 @@ import 'package:rfid_attendance_system/fonts/custom_icons.dart';
 import 'package:rfid_attendance_system/views/dashboard/adduserview.dart';
 import 'package:rfid_attendance_system/views/dashboard/databaseview.dart';
 import 'package:rfid_attendance_system/views/dashboard/graphview.dart';
+import 'package:rfid_attendance_system/views/dashboard/modifyadmin.dart';
 import 'package:rfid_attendance_system/views/dashboard/modifyuserview.dart';
 
 class DashBoardView extends StatefulWidget {
@@ -26,6 +27,8 @@ class _DashBoardViewState extends State<DashBoardView> {
         return const AddUserView();
       case 4:
         return const ModifyUserView();
+      case 5:
+        return const ModifyAdminView();
     }
 
     return Container();
@@ -174,6 +177,37 @@ class _DashBoardViewState extends State<DashBoardView> {
                           onTap: () {
                             setState(() {
                               _currentPanel = 4;
+                            });
+                          },
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 25),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              top: BorderSide(color: Styles.c4.withAlpha(125)),
+                            ),
+                          ),
+                          child: Text(
+                            'Admin',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Calibre',
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Styles.c4,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: const Text('Modify'),
+                          leading: const Icon(CustomIcons.user_edit),
+                          selected: _currentPanel == 5,
+                          selectedColor: Styles.c4,
+                          iconColor: Styles.c3,
+                          textColor: Styles.c3,
+                          onTap: () {
+                            setState(() {
+                              _currentPanel = 5;
                             });
                           },
                         ),
