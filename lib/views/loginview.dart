@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:rfid_attendance_system/config/dbconfig.dart';
 import 'package:rfid_attendance_system/controller/auth.dart';
+import 'package:rfid_attendance_system/controller/system.dart';
 import 'package:rfid_attendance_system/styles/styles.dart';
 
 class LoginView extends StatefulWidget {
@@ -15,7 +16,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final TextEditingController _ctrlUsername = TextEditingController();
   final TextEditingController _ctrlPassword = TextEditingController();
-
+  bool updateAvailable = false;
   void loadSettings() async {
     File file = File('config.cfg');
     if (await file.exists()) {
@@ -23,11 +24,38 @@ class _LoginViewState extends State<LoginView> {
     } else {}
   }
 
+  void checkForUpdates() async {
+    updateAvailable = await SystemCtrl.checkUpdates();
+    if (true) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return SimpleDialog(
+            backgroundColor: Styles.c1,
+            title: Text(
+              'Update Available v${DbConfig.newVersion}',
+              style: TextStyle(color: Styles.c4),
+            ),
+            children: [
+              Center(
+                  child: Text(
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                'Download at \nhttps://github.com/LydianJay/flutter-rfid-attendance-system/releases',
+                style: Styles.p5,
+              )),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadSettings();
+    checkForUpdates();
   }
 
   @override
