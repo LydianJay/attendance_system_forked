@@ -289,7 +289,7 @@ class _LoginViewState extends State<LoginView> {
 
                           if (isLogin) {
                             Navigator.of(context).pop();
-                            if (status['locked'] != 'true') {
+                            if (status['locked'] != true) {
                               Navigator.pushNamed(context, '/dashboard');
                             } else {
                               showDialog(
