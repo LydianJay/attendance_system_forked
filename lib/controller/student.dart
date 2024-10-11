@@ -88,13 +88,21 @@ class StudentCtrl {
     }
   }
 
-  static Future<List<int>> getStudentCount() async {
+  static Future<List<Map<String, int>>> getStudentCount() async {
     final uri = Uri.http(DbConfig.ip,
         "flutter-rfid-attendance-system-backend/fetch/count_student.php");
     final response = await http.get(uri);
     if (response.statusCode == 200) {
+      debugPrint(response.body);
       final List<dynamic> jsonData = jsonDecode(response.body);
-      return [int.parse(jsonData.first['num']), int.parse(jsonData[1]['num'])];
+      List<Map<String, int>> ret = [];
+      for (final element in jsonData) {
+        ret.add({
+          'gender': int.parse(element['gender']),
+          'val': int.parse(element['num'])
+        });
+      }
+      return ret;
     } else {
       debugPrint("ERROR - Status Code: ${response.statusCode}");
     }

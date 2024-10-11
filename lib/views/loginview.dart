@@ -26,7 +26,7 @@ class _LoginViewState extends State<LoginView> {
 
   void checkForUpdates() async {
     updateAvailable = await SystemCtrl.checkUpdates();
-    if (true) {
+    if (updateAvailable) {
       showDialog(
         context: context,
         builder: (context) {

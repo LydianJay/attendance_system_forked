@@ -18,6 +18,7 @@ class _DataBaseViewState extends State<DataBaseView> {
         child: const Text('data not available'),
       );
     }
+
     final headerStyle = Styles.p3.copyWith(color: Styles.c4.withAlpha(190));
     final tStyle = Styles.p4.copyWith(fontFamily: 'Calibre');
 
@@ -363,20 +364,27 @@ class _DataBaseViewState extends State<DataBaseView> {
   int _numMale = 0;
   int _numFemale = 0;
 
-  void _fetchCountAsync() async {
+  Future<List<Map<String, int>>> _fetchCountAsync() async {
     final count = await StudentCtrl.getStudentCount();
+
     if (count.isNotEmpty) {
-      setState(() {
-        _numMale = count.first;
-        _numFemale = count.last;
-      });
+      for (final c in count) {
+        switch (c['gender']) {
+          case 1:
+            _numMale = c['val']!;
+            break;
+          case 0:
+            _numFemale = c['val']!;
+            break;
+        }
+      }
     }
+    return count;
   }
 
   @override
   void initState() {
     super.initState();
-    _fetchCountAsync();
   }
 
   @override
@@ -388,123 +396,150 @@ class _DataBaseViewState extends State<DataBaseView> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: Container(
-              margin: const EdgeInsets.only(top: 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Flexible(
-                    flex: 10,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Styles.c2,
-                              borderRadius: BorderRadius.circular(8),
-                              border:
-                                  Border.all(color: Styles.c4.withAlpha(125)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Styles.c4.withAlpha(125),
-                                  blurRadius: 1.0,
-                                  spreadRadius: 0.45,
-                                  blurStyle: BlurStyle.normal,
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              children: [
-                                Flexible(
-                                  flex: 6,
-                                  child: Container(
-                                    margin: const EdgeInsets.only(top: 15),
-                                    child: Text(
-                                      'Enrolees',
-                                      style:
-                                          Styles.h2.copyWith(color: Styles.c3),
+                margin: const EdgeInsets.only(top: 25),
+                child: FutureBuilder(
+                    future: _fetchCountAsync(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Flexible(
+                              flex: 10,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Styles.c2,
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                            color: Styles.c4.withAlpha(125)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Styles.c4.withAlpha(125),
+                                            blurRadius: 1.0,
+                                            spreadRadius: 0.45,
+                                            blurStyle: BlurStyle.normal,
+                                          ),
+                                        ],
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Flexible(
+                                            flex: 6,
+                                            child: Container(
+                                              margin: const EdgeInsets.only(
+                                                  top: 15),
+                                              child: Text(
+                                                'Enrolees',
+                                                style: Styles.h2
+                                                    .copyWith(color: Styles.c3),
+                                              ),
+                                            ),
+                                          ),
+                                          Flexible(
+                                            flex: 5,
+                                            child: Container(
+                                                child: Text(
+                                              '${_numFemale + _numMale}',
+                                              style: Styles.h1,
+                                            )),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Flexible(
-                                  flex: 5,
-                                  child: Container(
-                                      child: Text(
-                                    '${_numFemale + _numMale}',
-                                    style: Styles.h1,
-                                  )),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
+                            Flexible(
+                              flex: 1,
+                              child: Container(),
+                            ),
+                            Flexible(
+                              flex: 10,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Styles.c2,
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                            color: Styles.c4.withAlpha(125)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Styles.c4.withAlpha(125),
+                                            blurRadius: 1.0,
+                                            spreadRadius: 0.45,
+                                            blurStyle: BlurStyle.normal,
+                                          ),
+                                        ],
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Flexible(
+                                            flex: 6,
+                                            child: Container(
+                                              margin: const EdgeInsets.only(
+                                                  top: 10),
+                                              child: Text(
+                                                'Gender',
+                                                style: Styles.h2
+                                                    .copyWith(color: Styles.c3),
+                                              ),
+                                            ),
+                                          ),
+                                          Flexible(
+                                            flex: 6,
+                                            child: Container(
+                                              margin: const EdgeInsets.only(
+                                                  top: 15),
+                                              child: Text(
+                                                'Male: $_numMale',
+                                                style: Styles.h4,
+                                              ),
+                                            ),
+                                          ),
+                                          Flexible(
+                                            flex: 6,
+                                            child: Container(
+                                                child: Text(
+                                              'Female: $_numFemale',
+                                              style: Styles.h4,
+                                            )),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                      return Container(
+                        margin: const EdgeInsets.only(top: 100),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Styles.c4.withAlpha(125)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Styles.c4.withAlpha(125),
+                              blurRadius: 1.0,
+                              spreadRadius: 0.45,
+                              blurStyle: BlurStyle.normal,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Container(),
-                  ),
-                  Flexible(
-                    flex: 10,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Styles.c2,
-                              borderRadius: BorderRadius.circular(8),
-                              border:
-                                  Border.all(color: Styles.c4.withAlpha(125)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Styles.c4.withAlpha(125),
-                                  blurRadius: 1.0,
-                                  spreadRadius: 0.45,
-                                  blurStyle: BlurStyle.normal,
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              children: [
-                                Flexible(
-                                  flex: 6,
-                                  child: Container(
-                                    margin: const EdgeInsets.only(top: 10),
-                                    child: Text(
-                                      'Gender',
-                                      style:
-                                          Styles.h2.copyWith(color: Styles.c3),
-                                    ),
-                                  ),
-                                ),
-                                Flexible(
-                                  flex: 6,
-                                  child: Container(
-                                    margin: const EdgeInsets.only(top: 15),
-                                    child: Text(
-                                      'Male: $_numMale',
-                                      style: Styles.h4,
-                                    ),
-                                  ),
-                                ),
-                                Flexible(
-                                  flex: 6,
-                                  child: Container(
-                                      child: Text(
-                                    'Female: $_numFemale',
-                                    style: Styles.h4,
-                                  )),
-                                ),
-                              ],
-                            ),
-                          ),
+                        child: Text(
+                          'Data not available',
+                          textAlign: TextAlign.center,
+                          style: Styles.h4,
                         ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                      );
+                    })),
           ),
         ),
         Flexible(

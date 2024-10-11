@@ -16,7 +16,6 @@ class SystemCtrl {
     if (response.statusCode == 200) {
       final body = await response.stream.bytesToString();
       final data = body.toString().split('\n');
-      int lineNum = 1;
       for (final line in data) {
         if (line.contains('version:')) {
           DbConfig.newVersion = line
@@ -30,7 +29,6 @@ class SystemCtrl {
         // else {
         //   debugPrint('$lineNum $line');
         // }
-        lineNum++;
       }
     } else {
       debugPrint("Error CODE: ${response.statusCode}");
@@ -44,12 +42,13 @@ class SystemCtrl {
     double nVer = double.parse(nVal.first);
     for (int i = 1; i < 3; i++) {
       cVer += double.parse(cVal[i]) / 100.0;
-      cVer *= 10;
+      cVer *= 10.0;
       nVer += double.parse(nVal[i]) / 100.0;
-      nVer *= 10;
+      nVer *= 10.0;
     }
 
-    debugPrint(info.toString());
+    debugPrint(cVal.toString());
+    debugPrint(nVal.toString());
     debugPrint("Current Val: $cVer");
     debugPrint("New Val: $nVer");
 
