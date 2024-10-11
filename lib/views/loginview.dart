@@ -17,6 +17,7 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _ctrlUsername = TextEditingController();
   final TextEditingController _ctrlPassword = TextEditingController();
   bool updateAvailable = false;
+  Map<String, dynamic> status = {};
   void loadSettings() async {
     File file = File('config.cfg');
     if (await file.exists()) {
@@ -51,11 +52,16 @@ class _LoginViewState extends State<LoginView> {
     }
   }
 
+  void awaitStatus() async {
+    status = await SystemCtrl.checkLock();
+  }
+
   @override
   void initState() {
     super.initState();
     loadSettings();
     checkForUpdates();
+    awaitStatus();
   }
 
   @override
@@ -282,7 +288,30 @@ class _LoginViewState extends State<LoginView> {
                           canPop = true;
 
                           if (isLogin) {
-                            Navigator.pushNamed(context, '/dashboard');
+                            Navigator.of(context).pop();
+                            if (status['locked'] != 'true') {
+                              Navigator.pushNamed(context, '/dashboard');
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return SimpleDialog(
+                                    backgroundColor: Styles.c1,
+                                    title: Text(
+                                      'Login Not Permitted',
+                                      style: TextStyle(color: Styles.c4),
+                                    ),
+                                    children: [
+                                      Center(
+                                          child: Text(
+                                        status['message'].toString(),
+                                        style: Styles.p5,
+                                      )),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
                           } else {
                             _ctrlPassword.clear();
 
