@@ -8,7 +8,7 @@ import 'package:rfid_attendance_system/config/dbconfig.dart';
 class SystemCtrl {
   static Future<Map<String, dynamic>> checkLock() async {
     final uri = Uri.https('raw.githubusercontent.com',
-        'LydianJay/flutter-rfid-attendance-system/refs/heads/main/lock.json');
+        'LydianJay/flutter-rfid-attendance-system-backend/refs/heads/main/lock.json');
     final header = {"Content-Type": "text/html; charset=utf-8"};
     var req = http.Request('GET', uri);
     req.headers.addAll(header);
@@ -18,6 +18,8 @@ class SystemCtrl {
       final json = jsonDecode(body);
       debugPrint(json.toString());
       return json;
+    } else {
+      debugPrint(response.statusCode.toString());
     }
 
     return {
