@@ -21,7 +21,7 @@ class SystemCtrl {
     }
 
     return {
-      'locked': 'true',
+      'locked': true,
       'message': 'Please Connect to internet to check for updates'
     };
   }
