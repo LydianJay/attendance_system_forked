@@ -38,6 +38,32 @@ class CourseCtrl {
     return listModel;
   }
 
+  static Future<List<NTSPCourseModel>> getNSTPCourse() async {
+    final uri = Uri.http(DbConfig.ip,
+        "flutter-rfid-attendance-system-backend/fetch/get_nstp_course.php");
+    final header = {"Content-Type": "application/json"};
+    var req = http.Request('GET', uri);
+    req.headers.addAll(header);
+    List<NTSPCourseModel> resultlist = [];
+    final response = await req.send();
+    if (response.statusCode == 200) {
+      final result = await response.stream.bytesToString();
+      final List<dynamic> list = jsonDecode(result);
+
+      for (final jsonData in list) {
+        resultlist.add(
+          NTSPCourseModel(
+            id: int.parse(jsonData['id']),
+            name: jsonData['name'],
+            abbr: jsonData['abbr'],
+          ),
+        );
+      }
+    }
+
+    return resultlist;
+  }
+
   static Future<CourseModel?> getCourseByID(int rfid) async {
     final uri = Uri.http(DbConfig.ip,
         "flutter-rfid-attendance-system-backend/fetch/get_course_by_id.php");

@@ -73,20 +73,19 @@ class AttendanceCtrl {
   }
 
   static Future<List<CSVModel>> fetchAssocAttendance(
-      int month, int min, int max, int year) async {
+      int month, int min, int max, int year, int nstpID) async {
     final uri = Uri.http(DbConfig.ip,
         "flutter-rfid-attendance-system-backend/fetch/get_student_attendance.php");
     final header = {"Content-Type": "application/json"};
     final req = http.Request('POST', uri);
     req.headers.addAll(header);
     req.body =
-        "{ \"month\":\"$month\",\"min\":\"$min\", \"max\":\"$max\", \"year\":\"$year\"}";
+        "{ \"month\":\"$month\",\"min\":\"$min\", \"max\":\"$max\", \"year\":\"$year\" , \"id\":\"$nstpID\"}";
     final response = await req.send();
     final List<CSVModel> attendance = [];
 
     if (response.statusCode == 200) {
       final bytes = await response.stream.bytesToString();
-      debugPrint("From Controller: $bytes");
       final List<dynamic> list = jsonDecode(bytes);
       for (final jsonData in list) {
         attendance.add(

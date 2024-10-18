@@ -2,9 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:rfid_attendance_system/controller/attendance.dart';
+import 'package:rfid_attendance_system/controller/course.dart';
 import 'package:rfid_attendance_system/formatters/dayinputformatter.dart';
 import 'package:rfid_attendance_system/model/attendancemodel.dart';
+import 'package:rfid_attendance_system/model/coursemodel.dart';
 import 'package:rfid_attendance_system/model/csvmodel.dart';
+import 'package:rfid_attendance_system/model/nstpcoursemodel.dart';
 import 'package:rfid_attendance_system/styles/styles.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:file_picker/file_picker.dart';
@@ -24,6 +27,10 @@ class _GraphViewState extends State<GraphView> {
   String currentMonthValue = "January";
   int currentYear = DateTime.now().year;
   List<AttendanceModel> attendance = [];
+  List<NTSPCourseModel> nstpCourseList = [];
+  List<DropdownMenuItem<String>> nstpCourseName = [];
+  String selectedNSTPCourse = '';
+  int selectedNSTPid = 1;
   final months = [
     'January',
     'February',
@@ -73,6 +80,7 @@ class _GraphViewState extends State<GraphView> {
       min,
       max,
       currentYear,
+      selectedNSTPid,
     );
     debugPrint("Data Recv: ${csvData.toString()}");
     for (final v in csvData) {
@@ -87,6 +95,22 @@ class _GraphViewState extends State<GraphView> {
     if (path != null) {
       final file = File(path);
       await file.writeAsString(data);
+    }
+  }
+
+  void getNTSPCourse() async {
+    nstpCourseList = await CourseCtrl.getNSTPCourse();
+
+    for (final i in nstpCourseList) {
+      nstpCourseName.add(
+        DropdownMenuItem(
+          value: i.abbr,
+          child: Text(
+            i.abbr,
+            style: Styles.tfts,
+          ),
+        ),
+      );
     }
   }
 
@@ -182,6 +206,8 @@ class _GraphViewState extends State<GraphView> {
   void initState() {
     super.initState();
     _generateDropDownItems();
+
+    getNTSPCourse();
   }
 
   @override
@@ -293,6 +319,35 @@ class _GraphViewState extends State<GraphView> {
                               onChanged: (data) {
                                 setState(() {
                                   currentYear = int.parse(data.toString());
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 5,
+                          child: Container(
+                            child: DropdownButton(
+                              value: selectedNSTPCourse,
+                              isDense: true,
+                              isExpanded: true,
+                              padding: const EdgeInsets.only(top: 20),
+                              focusColor: Styles.c3,
+                              dropdownColor: Styles.c3,
+                              items: nstpCourseName,
+                              underline: Container(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Styles.c4.withAlpha(120),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              onChanged: (data) {
+                                setState(() {
+                                  selectedNSTPCourse = data.toString();
+                                  // selectedNSTPid = int.parse(data.toString());
                                 });
                               },
                             ),
