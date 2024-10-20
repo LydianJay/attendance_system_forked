@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 
 class Styles {
-  static Color c1 = const Color(0xFF0B2447);
-  static Color c2 = const Color(0xFF19376D);
-  static Color c3 = const Color(0xFF576CBC);
-  static Color c4 = const Color(0xFFA5D7E8);
+  static Color c1 = const Color(0xFFDDE6ED);
+  static Color c2 = const Color(0xFF9DB2BF);
+  static Color c3 = const Color.fromARGB(80, 0, 0, 0); // inactive text
+  static Color c4 = const Color(0xFF000000); // active text
+
+  // 0xFFDDE6ED
+  // 0xFF9DB2BF
+
+  // static Color c1 = const Color(0xFF0B2447);
+  // static Color c2 = const Color(0xFF19376D);
+  // static Color c3 = const Color(0xFF576CBC);
+  // static Color c4 = const Color(0xFFA5D7E8);
 
   static TextStyle h5 = TextStyle(
     fontFamily: 'helvetica',
