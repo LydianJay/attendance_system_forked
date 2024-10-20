@@ -5,7 +5,6 @@ import 'package:rfid_attendance_system/controller/attendance.dart';
 import 'package:rfid_attendance_system/controller/course.dart';
 import 'package:rfid_attendance_system/formatters/dayinputformatter.dart';
 import 'package:rfid_attendance_system/model/attendancemodel.dart';
-import 'package:rfid_attendance_system/model/coursemodel.dart';
 import 'package:rfid_attendance_system/model/csvmodel.dart';
 import 'package:rfid_attendance_system/model/nstpcoursemodel.dart';
 import 'package:rfid_attendance_system/styles/styles.dart';
@@ -28,8 +27,8 @@ class _GraphViewState extends State<GraphView> {
   int currentYear = DateTime.now().year;
   List<AttendanceModel> attendance = [];
   List<NTSPCourseModel> nstpCourseList = [];
-  List<DropdownMenuItem<String>> nstpCourseName = [];
-  String selectedNSTPCourse = '';
+
+  String selectedNSTPCourse = 'CWTS';
   int selectedNSTPid = 1;
   final months = [
     'January',
@@ -45,6 +44,13 @@ class _GraphViewState extends State<GraphView> {
     'November',
     'December',
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _generateDropDownItems();
+  }
+
   void _generateDropDownItems() {
     for (final m in months) {
       items.add(
@@ -75,12 +81,15 @@ class _GraphViewState extends State<GraphView> {
     String data = "${CSVModel.getHeaderTitleAsString()}\n";
     final min = int.parse(_ctrlMin.text);
     final max = int.parse(_ctrlMax.text);
+
+    int id = nstpCourseList.firstWhere((e) => e.abbr == selectedNSTPCourse).id;
+
     final csvData = await AttendanceCtrl.fetchAssocAttendance(
       months.indexOf(currentMonthValue) + 1,
       min,
       max,
       currentYear,
-      selectedNSTPid,
+      id,
     );
     debugPrint("Data Recv: ${csvData.toString()}");
     for (final v in csvData) {
@@ -90,7 +99,7 @@ class _GraphViewState extends State<GraphView> {
     String? path = await FilePicker.platform.saveFile(
       allowedExtensions: ['csv', 'txt'],
       fileName:
-          "[$currentYear] [$currentMonthValue $min - $max]_Attendance.csv",
+          "[$currentYear][$selectedNSTPCourse][$currentMonthValue $min - $max]_Attendance.csv",
     );
     if (path != null) {
       final file = File(path);
@@ -98,8 +107,10 @@ class _GraphViewState extends State<GraphView> {
     }
   }
 
-  void getNTSPCourse() async {
+  Future<Widget> _buildSelectedNSTP() async {
     nstpCourseList = await CourseCtrl.getNSTPCourse();
+    selectedNSTPid = nstpCourseList.first.id;
+    List<DropdownMenuItem<String>> nstpCourseName = [];
 
     for (final i in nstpCourseList) {
       nstpCourseName.add(
@@ -112,6 +123,35 @@ class _GraphViewState extends State<GraphView> {
         ),
       );
     }
+
+    return Container(
+      child: DropdownButton(
+        value: selectedNSTPCourse,
+        isDense: true,
+        isExpanded: true,
+        padding: const EdgeInsets.only(top: 20),
+        focusColor: Styles.c3,
+        dropdownColor: Styles.c3,
+        items: nstpCourseName,
+        underline: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: Styles.c4.withAlpha(120),
+              ),
+            ),
+          ),
+        ),
+        onChanged: (data) {
+          setState(() {
+            selectedNSTPCourse = data.toString();
+            selectedNSTPid =
+                nstpCourseList.firstWhere((e) => e.abbr == data.toString()).id;
+            debugPrint('Selected ID: $selectedNSTPid');
+          });
+        },
+      ),
+    );
   }
 
   Future<Widget> _buildChart() async {
@@ -200,14 +240,6 @@ class _GraphViewState extends State<GraphView> {
         ],
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _generateDropDownItems();
-
-    getNTSPCourse();
   }
 
   @override
@@ -325,34 +357,17 @@ class _GraphViewState extends State<GraphView> {
                           ),
                         ),
                         Flexible(
-                          flex: 5,
-                          child: Container(
-                            child: DropdownButton(
-                              value: selectedNSTPCourse,
-                              isDense: true,
-                              isExpanded: true,
-                              padding: const EdgeInsets.only(top: 20),
-                              focusColor: Styles.c3,
-                              dropdownColor: Styles.c3,
-                              items: nstpCourseName,
-                              underline: Container(
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: Styles.c4.withAlpha(120),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              onChanged: (data) {
-                                setState(() {
-                                  selectedNSTPCourse = data.toString();
-                                  // selectedNSTPid = int.parse(data.toString());
-                                });
+                            flex: 5,
+                            child: FutureBuilder(
+                              future: _buildSelectedNSTP(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  return snapshot.requireData;
+                                }
+                                return Container();
                               },
-                            ),
-                          ),
-                        ),
+                            )),
                         Flexible(
                           flex: 4,
                           child: Container(

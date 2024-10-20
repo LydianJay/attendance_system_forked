@@ -49,7 +49,6 @@ class CourseCtrl {
     if (response.statusCode == 200) {
       final result = await response.stream.bytesToString();
       final List<dynamic> list = jsonDecode(result);
-
       for (final jsonData in list) {
         resultlist.add(
           NTSPCourseModel(

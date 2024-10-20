@@ -81,12 +81,16 @@ class AttendanceCtrl {
     req.headers.addAll(header);
     req.body =
         "{ \"month\":\"$month\",\"min\":\"$min\", \"max\":\"$max\", \"year\":\"$year\" , \"id\":\"$nstpID\"}";
+
+    debugPrint(req.body);
     final response = await req.send();
     final List<CSVModel> attendance = [];
 
     if (response.statusCode == 200) {
       final bytes = await response.stream.bytesToString();
+      debugPrint('Fetch assoc ${bytes.toString()}');
       final List<dynamic> list = jsonDecode(bytes);
+
       for (final jsonData in list) {
         attendance.add(
           CSVModel(
