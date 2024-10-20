@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         '/dashboard': (context) => const DashBoardView(),
         '/settings': (context) => const SettingsView(),
       },
-      initialRoute: '/dashboard',
+      initialRoute: '/login',
     );
   }
 }
