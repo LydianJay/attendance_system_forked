@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+// Styles Class witch defines the theme color of buttons, background, foreground, and other styling
+// parameters of each widgets
+
 class Styles {
   static Color c1 = const Color(0xFFDDE6ED);
   static Color c2 = const Color(0xFF9DB2BF);
