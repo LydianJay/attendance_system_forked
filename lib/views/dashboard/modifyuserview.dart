@@ -9,6 +9,12 @@ import 'package:rfid_attendance_system/model/nstpcoursemodel.dart';
 import 'package:rfid_attendance_system/model/studentmodel.dart';
 import 'package:rfid_attendance_system/styles/styles.dart';
 
+/*
+  This is the modify user class builder whichs builds the UI
+  for the 'modify' tab, 
+  This class modify users information in the database
+*/
+
 class ModifyUserView extends StatefulWidget {
   const ModifyUserView({super.key});
 

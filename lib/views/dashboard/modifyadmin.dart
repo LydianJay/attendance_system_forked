@@ -3,6 +3,12 @@ import 'package:rfid_attendance_system/controller/admin.dart';
 import 'package:rfid_attendance_system/fonts/custom_icons.dart';
 import 'package:rfid_attendance_system/styles/styles.dart';
 
+
+/*
+  This is the class builder for the modify admin 
+  
+*/
+
 class ModifyAdminView extends StatefulWidget {
   const ModifyAdminView({super.key});
 

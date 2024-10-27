@@ -3,8 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:rfid_attendance_system/config/dbconfig.dart';
 import 'package:rfid_attendance_system/controller/auth.dart';
-import 'package:rfid_attendance_system/controller/system.dart';
 import 'package:rfid_attendance_system/styles/styles.dart';
+
+/* 
+  This is the login view or the Login Page builder class
+  this builds the widget for the login page
+*/
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -16,8 +20,6 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final TextEditingController _ctrlUsername = TextEditingController();
   final TextEditingController _ctrlPassword = TextEditingController();
-  bool updateAvailable = false;
-  Map<String, dynamic> status = {};
   void loadSettings() async {
     File file = File('config.cfg');
     if (await file.exists()) {
@@ -25,43 +27,10 @@ class _LoginViewState extends State<LoginView> {
     } else {}
   }
 
-  void checkForUpdates() async {
-    updateAvailable = await SystemCtrl.checkUpdates();
-    if (updateAvailable) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return SimpleDialog(
-            backgroundColor: Styles.c1,
-            title: Text(
-              'Update Available v${DbConfig.newVersion}',
-              style: TextStyle(color: Styles.c4),
-            ),
-            children: [
-              Center(
-                  child: Text(
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                'Download at \nhttps://github.com/LydianJay/flutter-rfid-attendance-system/releases',
-                style: Styles.p5,
-              )),
-            ],
-          );
-        },
-      );
-    }
-  }
-
-  void awaitStatus() async {
-    status = await SystemCtrl.checkLock();
-  }
-
   @override
   void initState() {
     super.initState();
     loadSettings();
-    checkForUpdates();
-    awaitStatus();
   }
 
   @override
@@ -289,29 +258,7 @@ class _LoginViewState extends State<LoginView> {
 
                           if (isLogin) {
                             Navigator.of(context).pop();
-                            if (status['locked'] != true) {
-                              Navigator.pushNamed(context, '/dashboard');
-                            } else {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return SimpleDialog(
-                                    backgroundColor: Styles.c1,
-                                    title: Text(
-                                      'Login Not Permitted',
-                                      style: TextStyle(color: Styles.c4),
-                                    ),
-                                    children: [
-                                      Center(
-                                          child: Text(
-                                        status['message'].toString(),
-                                        style: Styles.p5,
-                                      )),
-                                    ],
-                                  );
-                                },
-                              );
-                            }
+                            Navigator.pushNamed(context, '/dashboard');
                           } else {
                             _ctrlPassword.clear();
 

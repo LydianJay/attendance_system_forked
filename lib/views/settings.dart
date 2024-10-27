@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:rfid_attendance_system/config/dbconfig.dart';
 import 'package:rfid_attendance_system/styles/styles.dart';
 
+/*
+  This is the settings class witch builds the settings menu
+  the settings menu contains configuration for the server IP
+*/
+
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
 
@@ -56,7 +61,7 @@ class _SettingsViewState extends State<SettingsView> {
                         // inputFormatters: [
                         //   FilteringTextInputFormatter.deny(RegExp(r'[]'))
                         // ],
-                        maxLength: 15,
+                        maxLength: 64,
                         decoration: Styles.id.copyWith(
                           label: const Text('Server IP:'),
                         ),

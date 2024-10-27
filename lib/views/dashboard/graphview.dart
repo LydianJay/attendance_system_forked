@@ -11,6 +11,11 @@ import 'package:rfid_attendance_system/styles/styles.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:file_picker/file_picker.dart';
 
+/*
+  GrapView builder which is responsible for displaying the graph of student attendance
+
+*/
+
 class GraphView extends StatefulWidget {
   const GraphView({super.key});
 
